@@ -6,6 +6,8 @@
 //  Copyright © 2015 Derin Dutz. All rights reserved.
 //
 
+import Bolts
+import Parse
 import UIKit
 
 @UIApplicationMain
@@ -15,6 +17,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        // Enable storing and querying data from Local Datastore.
+        Parse.enableLocalDatastore()
+        
+        // Initialize Parse.
+        Parse.setApplicationId("UtFM8kanKlQPPPjcFLuRpBTiR2758EXc5XH7qX8N",
+            clientKey: "xZd3XnO1EqChkNMaoLMt1bZfg3VrMcQykr3ZdRv0")
+        
         // Override point for customization after application launch.
         return true
     }
