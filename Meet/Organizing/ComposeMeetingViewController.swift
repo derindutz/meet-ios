@@ -55,21 +55,53 @@ class ComposeMeetingViewController: MeetViewController, UIPageViewControllerData
         static let UnwindFromSavedMeeting = "Unwind From Saved Meeting"
     }
     
-    override func didMoveToParentViewController(parent: UIViewController?) {
-        if (!(parent?.isEqual(self.parentViewController) ?? false)) {
-            self.meeting.save()
-        }
+//    override func didMoveToParentViewController(parent: UIViewController?) {
+//        if (!(parent?.isEqual(self.parentViewController) ?? false)) {
+//            self.meeting.save()
+//        }
+//    }
+    
+    @IBAction func cancelComposeMeeting(sender: UIBarButtonItem) {
+        let alert = UIAlertController()
+        
+        alert.addAction(UIAlertAction(
+            title: "Delete Draft",
+            style: .Destructive)
+            { (action: UIAlertAction) -> Void in
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+        )
+        
+        alert.addAction(UIAlertAction(
+            title: "Save Draft",
+            style: .Default)
+            { (action: UIAlertAction) -> Void in
+                self.meeting.save()
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+        )
+        
+        alert.addAction(UIAlertAction(
+            title: "Cancel",
+            style: .Cancel)
+            { (action: UIAlertAction) -> Void in
+                // do nothing
+            }
+        )
+        
+        presentViewController(alert, animated: true, completion: nil)
     }
     
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        if identifier == Constants.UnwindFromSavedMeeting {
-            return self.meeting.save()
-        }
-        
-        return false
-    }
+//    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+//        if identifier == Constants.UnwindFromSavedMeeting {
+//            return self.meeting.save()
+//        }
+//        
+//        return false
+//    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        print("preparing for segue")
         if let identifier = segue.identifier {
             if identifier == Constants.UnwindFromSavedMeeting {
                 if let currentVC = self.pageViewController.viewControllers![0] as? MeetingComposerTableViewController {

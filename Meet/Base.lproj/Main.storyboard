@@ -756,7 +756,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="rKy-D5-hFm">
                             <connections>
-                                <segue destination="fbq-8A-fYo" kind="show" identifier="Segue Create Meeting From Dashboard" id="eEK-Cr-vkV"/>
+                                <segue destination="T86-Hl-Mor" kind="presentation" identifier="Segue Create Meeting From Dashboard" id="eEK-Cr-vkV"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1069,7 +1069,7 @@
                     <navigationItem key="navigationItem" id="9Zu-WZ-vVf">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="M1y-UV-tDt">
                             <connections>
-                                <segue destination="fbq-8A-fYo" kind="show" identifier="Segue Create Meeting" id="Sgl-dG-pm5"/>
+                                <segue destination="T86-Hl-Mor" kind="show" identifier="Segue Create Meeting" id="Sgl-dG-pm5"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1091,11 +1091,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="oeU-EM-LA7"/>
+                    <navigationItem key="navigationItem" id="oeU-EM-LA7">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="9IF-Ng-TZM">
+                            <connections>
+                                <action selector="cancelComposeMeeting:" destination="fbq-8A-fYo" id="vvb-hl-U8n"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Next" id="sjt-n3-0lZ"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MZ1-ak-SkH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2958" y="1957.5"/>
+            <point key="canvasLocation" x="3876" y="1957.5"/>
         </scene>
         <!--Meeting Composer Information Table View Controller-->
         <scene sceneID="Flg-ze-sRb">
@@ -1353,7 +1360,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E6X-mT-Q9D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3655.5" y="1957.5"/>
+            <point key="canvasLocation" x="4573.5" y="1957.5"/>
         </scene>
         <!--Date Picker View Controller-->
         <scene sceneID="66r-4G-hWE">
@@ -1690,7 +1697,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B8U-8X-mVZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4386" y="1957.5"/>
+            <point key="canvasLocation" x="5304" y="1957.5"/>
         </scene>
         <!--Attendees Table View Controller-->
         <scene sceneID="2S3-bu-Rp8">
@@ -1955,7 +1962,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yN1-SX-Slf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5151" y="1957.5"/>
+            <point key="canvasLocation" x="6069" y="1957.5"/>
         </scene>
         <!--Add Attendee By Number Table View Controller-->
         <scene sceneID="GWc-3T-8oh">
@@ -2490,7 +2497,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MI7-Qw-ud9" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="CEM-Uh-fAf" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="5896.5" y="1957.5"/>
+            <point key="canvasLocation" x="6814.5" y="1957.5"/>
         </scene>
         <!--Talking Point Composer View Controller-->
         <scene sceneID="D8E-HY-17H">
@@ -3234,7 +3241,7 @@
                     <navigationItem key="navigationItem" id="673-AH-pg7">
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="hZa-WF-4IA">
                             <connections>
-                                <segue destination="fbq-8A-fYo" kind="show" identifier="Segue Edit Meeting From Summary" id="wOT-m5-GSA"/>
+                                <segue destination="T86-Hl-Mor" kind="show" identifier="Segue Edit Meeting From Summary" id="wOT-m5-GSA"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -3984,6 +3991,25 @@
             </objects>
             <point key="canvasLocation" x="3655.5" y="-273"/>
         </scene>
+        <!--Meet Navigation Controller-->
+        <scene sceneID="jTB-dG-Jdg">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="T86-Hl-Mor" customClass="MeetNavigationController" customModule="Meet" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="CP6-cN-hYp">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="fbq-8A-fYo" kind="relationship" relationship="rootViewController" id="qqs-yl-X3t"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F3U-nW-H9w" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2958" y="1957.5"/>
+        </scene>
     </scenes>
     <resources>
         <image name="about_icon" width="23" height="23"/>
@@ -4002,7 +4028,7 @@
         <image name="triangle_down" width="15" height="10"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="eEK-Cr-vkV"/>
         <segue reference="AZr-JY-sOi"/>
+        <segue reference="wOT-m5-GSA"/>
     </inferredMetricsTieBreakers>
 </document>
