@@ -27,12 +27,17 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
         self.tableView.estimatedRowHeight = 100.0
     }
     
-    override func viewWillAppear(animated: Bool) {
-        self.meeting = self.meetingDataSource.meeting
-        return super.viewWillAppear(animated)
-    }
+//    override func viewWillAppear(animated: Bool) {
+//        self.meeting = self.meetingDataSource.meeting
+//        return super.viewWillAppear(animated)
+//    }
     
     // MARK: Storyboard Connectivity
+    
+    @IBOutlet weak var meetingNameField: UITextField!
+    @IBOutlet weak var timeButton: UIButton!
+    @IBOutlet weak var durationField: UITextField!
+    @IBOutlet weak var locationField: UITextField!
     
     private struct Storyboard {
         static let UnwindFromNewlyCreatedMeeting = "Unwind From Newly Created Meeting"
@@ -42,7 +47,6 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
         static let MeetingComposerSummaryTalkingPointsTitleCellIdentifier = "MeetingComposerSummaryTalkingPointsTitleCell"
         static let MeetingComposerSummaryTalkingPointCellIdentifier = "MeetingComposerSummaryTalkingPointCell"
         static let MeetingComposerSummaryTalkingPointErrorCellIdentifier = "MeetingComposerSummaryTalkingPointErrorCell"
-        static let MeetingComposerSummarySendCellIdentifier = "MeetingComposerSummarySendCell"
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
@@ -60,6 +64,44 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
         
         return false
     }
+    
+    @IBAction func sendMeeting(sender: UIBarButtonItem) {
+        print("sent")
+    }
+    
+    
+    @IBAction func cancelComposeMeeting(sender: UIBarButtonItem) {
+        let alert = UIAlertController()
+        
+        alert.addAction(UIAlertAction(
+            title: "Delete Draft",
+            style: .Destructive)
+            { (action: UIAlertAction) -> Void in
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+        )
+        
+        alert.addAction(UIAlertAction(
+            title: "Save Draft",
+            style: .Default)
+            { (action: UIAlertAction) -> Void in
+                self.meeting.save()
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+        )
+        
+        alert.addAction(UIAlertAction(
+            title: "Cancel",
+            style: .Cancel)
+            { (action: UIAlertAction) -> Void in
+                // do nothing
+            }
+        )
+        
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let identifier = segue.identifier {
@@ -80,7 +122,7 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
     // MARK: UITableViewDataSource
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 6
+        return 5
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -121,10 +163,6 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
             let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.MeetingComposerSummaryTalkingPointCellIdentifier, forIndexPath: indexPath) as! MeetingComposerSummaryTalkingPointCell
             cell.talkingPoint = meeting.talkingPoints[indexPath.row]
             return cell
-        case 5:
-            let sendCell = tableView.dequeueReusableCellWithIdentifier(Storyboard.MeetingComposerSummarySendCellIdentifier, forIndexPath: indexPath) as! MeetingComposerSummarySendCell
-            sendCell.isSendEnabled = self.meeting.isReadyToSend()
-            return sendCell
         default:
             return UITableViewCell()
         }
