@@ -32,7 +32,22 @@ class MeetingComposerSummaryTitleCell: UITableViewCell {
     // MARK: GUI
     
     private func updateUI() {
-        titleLabel.text = title
-        timeLabel.text = time
+        if let title = self.title {
+            titleLabel.text = title
+            titleLabel.textColor = MeetColor.DarkHighlight
+        } else {
+            titleLabel.text = "add meeting name"
+            titleLabel.textColor = MeetColor.WarningHighlight
+        }
+        
+        if let time = self.time {
+            timeLabel.text = time
+            timeLabel.textColor = MeetColor.LightHighlight
+        } else {
+            let timeErrorStr = NSMutableAttributedString(string: "? min")
+            timeErrorStr.addAttribute(NSForegroundColorAttributeName, value: UIColor.blackColor(), range: NSRange(location: 0, length: 1))
+            timeErrorStr.addAttribute(NSForegroundColorAttributeName, value: MeetColor.WarningHighlight, range: NSRange(location: 2, length: 3))
+            timeLabel.attributedText = timeErrorStr
+        }
     }
 }

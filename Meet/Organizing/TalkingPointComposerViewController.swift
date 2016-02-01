@@ -51,7 +51,7 @@ class TalkingPointComposerViewController: MeetViewController, UITextViewDelegate
         if let identifier = segue.identifier {
             if identifier == Storyboard.UnwindFromNewlyCreatedTalkingPoint {
                 if let tptvc = segue.destinationViewController as? TalkingPointsTableViewController {
-                    tptvc.meeting.talkingPoints.append(textView.text)
+                    tptvc.meeting.talkingPoints.append(TalkingPoint(text: textView.text))
                 }
             }
         }
@@ -68,7 +68,11 @@ class TalkingPointComposerViewController: MeetViewController, UITextViewDelegate
     
     func textViewDidChange(textView: UITextView) {        
         if textView.textColor == Constants.TextColor {
-            let numCharactersLeft = Constants.MaxCharacterCount - textView.text.utf16.count
+            var numCharactersLeft = Constants.MaxCharacterCount - textView.text.utf16.count
+            if numCharactersLeft < 0 {
+                textView.text = textView.text.substringToIndex(textView.text.startIndex.advancedBy(Constants.MaxCharacterCount))
+                numCharactersLeft = Constants.MaxCharacterCount - textView.text.utf16.count
+            }
             characterCountLabel.text = "\(numCharactersLeft) characters left"
         }
     }

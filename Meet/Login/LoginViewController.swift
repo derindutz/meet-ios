@@ -9,29 +9,96 @@
 import UIKit
 import Parse
 
-class LoginViewController: UIViewController {
+class LoginViewController: MeetViewController, UITextFieldDelegate {
+    
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var profileView: ProfileView! {
+        didSet {
+            profileView.diameter = 100
+        }
+    }
+    
+    @IBOutlet weak var actionButton: UIButton!
     
     // MARK: View Controller Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        nameTextField.delegate = self
+        nameTextField.becomeFirstResponder()
+    }
+    
+    var timer: NSTimer? = nil
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        timer?.invalidate()
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: Selector("getHints:"), userInfo: textField, repeats: false)
+        return true
+    }
+    
+    func getHints(timer: NSTimer) {
+        updateUser()
     }
     
     override func viewDidAppear(animated: Bool) {
         attemptLoginWithKeychain()
     }
     
+    // MARK: Text Field Delegate
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        updateUser()
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
     // MARK: Storyboard Connectivity
     
-    private struct Storyboard {
+    private struct Constants {
         static let SegueLogin = "Login"
+        static let LoginString = "log in"
+        static let SignUpString = "sign up"
+        static let GetStartedString = "get started"
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        if identifier == Storyboard.SegueLogin {
+        if identifier == Constants.SegueLogin {
             return Account.isLoggedIn()
         }
         return true
+    }
+    
+    private var user: User? {
+        didSet {
+            if self.user == nil {
+                let questionUser = User()
+                questionUser.firstName = "?"
+                profileView.user = questionUser
+            } else {
+                profileView.user = self.user
+            }
+        }
+    }
+    
+    private func updateUser() {
+        if let name = nameTextField.text {
+            self.user = AddressBookHelper.getUserByName(name)
+        } else {
+            self.user = nil
+        }
+    }
+    
+    @IBAction func loginPressed(sender: UIButton) {
+        updateUser()
+        if self.user != nil {
+            attemptLoginWithKeychain()
+        } else {
+            AddressBookHelper.showMessage("No contacts were found matching the given name.")
+        }
     }
     
     // MARK: Login
@@ -41,22 +108,26 @@ class LoginViewController: UIViewController {
             print("Logged in with keychain.")
             performLogin()
         } else {
-            if Account.login("admin", password: "pass") {
-                print("Logged in with password.")
-            } else {
-                createNewAccount()
+            if let user = self.user, username = user.username {
+                if Account.login(username, password: "password") {
+                    print("Logged in with password.")
+                    performLogin()
+                } else {
+                    createNewAccount(username, password: "password")
+                    CurrentUser.username = username
+                    performLogin()
+                }
             }
         }
     }
     
     private func performLogin() {
         print("performing login...")
-        performSegueWithIdentifier(Storyboard.SegueLogin, sender: self)
+        MeetingDatabase.loadMeetings()
+        performSegueWithIdentifier(Constants.SegueLogin, sender: self)
     }
     
-    private func createNewAccount() {
-        let username = "admin"
-        let password = "pass"
+    private func createNewAccount(username: String, password: String) {
         let newUser = PFUser()
         newUser.username = username
         newUser.password = password

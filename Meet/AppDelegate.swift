@@ -24,8 +24,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.setApplicationId("UtFM8kanKlQPPPjcFLuRpBTiR2758EXc5XH7qX8N",
             clientKey: "xZd3XnO1EqChkNMaoLMt1bZfg3VrMcQykr3ZdRv0")
         
+        let pageControl = UIPageControl.appearance()
+        pageControl.pageIndicatorTintColor = MeetColor.LightestBackground
+        pageControl.currentPageIndicatorTintColor = MeetColor.LightHighlight
+        pageControl.backgroundColor = UIColor.whiteColor()
+        
+        let tabBarAppearance = UITabBar.appearance()
+        tabBarAppearance.barTintColor = UIColor.whiteColor()
+        tabBarAppearance.translucent = false
+        tabBarAppearance.backgroundImage = UIImage()
+        tabBarAppearance.shadowImage = getImageWithColor(MeetColor.DarkBackground, size: CGSize(width: 1, height: 1))
+        
         // Override point for customization after application launch.
         return true
+    }
+    
+    private func getImageWithColor(color: UIColor, size: CGSize) -> UIImage {
+        let rect = CGRectMake(0, 0, size.width, size.height)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        color.setFill()
+        UIRectFill(rect)
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -40,6 +61,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        print("loading meetings while entering foreground")
+        if CurrentUser.username != "" {
+            MeetingDatabase.loadMeetings()
+        }
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
@@ -48,6 +73,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        print("terminating")
+        Account.logout()
     }
 
 

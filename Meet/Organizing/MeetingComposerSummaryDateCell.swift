@@ -34,9 +34,28 @@ class MeetingComposerSummaryDateCell: UITableViewCell {
     // MARK: GUI
     
     private func updateUI() {
-        dayLabel.text = DateHelper.getDayString(date)
-        monthLabel.text = DateHelper.getThreeLetterMonthString(date)
-        startDateLabel.text = DateHelper.getTimeSubtitle(date)
-        locationLabel.text = location
+        if let date = self.date {
+            dayLabel.text = DateHelper.getDayString(date)
+            dayLabel.textColor = UIColor.blackColor()
+            monthLabel.text = DateHelper.getThreeLetterMonthString(date)
+            monthLabel.textColor = MeetColor.DarkBackground
+            startDateLabel.text = DateHelper.getTimeSubtitle(date)
+            startDateLabel.textColor = UIColor.blackColor()
+        } else {
+            dayLabel.text = "?"
+            dayLabel.textColor = UIColor.blackColor()
+            monthLabel.text = "date"
+            monthLabel.textColor = MeetColor.WarningHighlight
+            startDateLabel.text = "add time"
+            startDateLabel.textColor = MeetColor.WarningHighlight
+        }
+        
+        if let location = self.location {
+            locationLabel.text = location
+            locationLabel.textColor = UIColor.blackColor()
+        } else {
+            locationLabel.text = "add location"
+            locationLabel.textColor = MeetColor.WarningHighlight
+        }
     }
 }

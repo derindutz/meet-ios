@@ -14,6 +14,18 @@ class DatePickerViewController: MeetViewController {
     
     @IBOutlet weak var datePicker: UIDatePicker!
     
+    override func viewDidLoad() {
+        let now = NSDate()
+        let calendar = NSCalendar.currentCalendar()
+        let currentMinute = calendar.component(.Minute, fromDate: now)
+        let remainder = currentMinute % 5
+        if remainder != 0 {
+            if let date = calendar.dateByAddingUnit(.Minute, value: 5 - remainder, toDate: now, options: NSCalendarOptions()) {
+                datePicker.minimumDate = date
+            }
+        }
+    }
+    
     // MARK: Storyboard Connectivity
     
     private struct Storyboard {

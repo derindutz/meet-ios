@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MeetingComposerSummaryTableViewController: MeetTableViewController {
+class MeetingComposerSummaryTableViewController: MeetingComposerTableViewController {
 
     // MARK: Public API
     
@@ -16,69 +16,6 @@ class MeetingComposerSummaryTableViewController: MeetTableViewController {
         didSet {
             tableView.reloadData()
         }
-    }
-    
-    var status: String = "Creating"
-    
-    // MARK: Storyboard Connectivity
-    
-    private struct Storyboard {
-        static let UnwindFromNewlyCreatedMeeting = "Unwind From Newly Created Meeting"
-        static let MeetingComposerSummaryTitleCellIdentifier = "MeetingComposerSummaryTitleCell"
-        static let MeetingComposerSummaryDateCellIdentifier = "MeetingComposerSummaryDateCell"
-        static let MeetingComposerSummaryAttendeesCellIdentifier = "MeetingComposerSummaryAttendeesCell"
-        static let MeetingComposerSummaryTalkingPointsTitleCellIdentifier = "MeetingComposerSummaryTalkingPointsTitleCell"
-        static let MeetingComposerSummaryTalkingPointCellIdentifier = "MeetingComposerSummaryTalkingPointCell"
-    }
-    
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        if identifier == Storyboard.UnwindFromNewlyCreatedMeeting {
-            return finishComposingMeeting()
-        }
-        
-        return false
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let otvc = segue.destinationViewController as? OrganizingTableViewController {
-            switch status {
-            case "Creating":
-                otvc.meetings[1].append(meeting)
-            case "Editing":
-                if let indices = findMeetingIndex(meeting, meetingsArr: otvc.meetings) {
-                    otvc.meetings[indices.section][indices.index] = meeting
-                }
-            default:
-                print("invalid status")
-            }
-        }
-    }
-    
-    private func findMeetingIndex(meeting: Meeting, meetingsArr: [[Meeting]]) -> (section: Int, index: Int)? {
-        for (section, meetings) in meetingsArr.enumerate() {
-            for (index, existingMeeting) in meetings.enumerate() {
-                if existingMeeting.id == meeting.id {
-                    return (section, index)
-                }
-            }
-        }
-        
-        return nil
-    }
-    
-    // MARK: Meeting Creation
-    
-    private func finishComposingMeeting() -> Bool {
-        switch status {
-        case "Creating":
-            MeetingDatabase.create(meeting)
-        case "Editing":
-            MeetingDatabase.update(meeting)
-        default:
-            print("invalid status")
-        }
-        
-        return true
     }
     
     // MARK: View Controller Lifecycle
@@ -90,14 +27,67 @@ class MeetingComposerSummaryTableViewController: MeetTableViewController {
         self.tableView.estimatedRowHeight = 100.0
     }
     
+    override func viewWillAppear(animated: Bool) {
+        self.meeting = self.meetingDataSource.meeting
+        return super.viewWillAppear(animated)
+    }
+    
+    // MARK: Storyboard Connectivity
+    
+    private struct Storyboard {
+        static let UnwindFromNewlyCreatedMeeting = "Unwind From Newly Created Meeting"
+        static let MeetingComposerSummaryTitleCellIdentifier = "MeetingComposerSummaryTitleCell"
+        static let MeetingComposerSummaryDateCellIdentifier = "MeetingComposerSummaryDateCell"
+        static let MeetingComposerSummaryAttendeesCellIdentifier = "MeetingComposerSummaryAttendeesCell"
+        static let MeetingComposerSummaryTalkingPointsTitleCellIdentifier = "MeetingComposerSummaryTalkingPointsTitleCell"
+        static let MeetingComposerSummaryTalkingPointCellIdentifier = "MeetingComposerSummaryTalkingPointCell"
+        static let MeetingComposerSummaryTalkingPointErrorCellIdentifier = "MeetingComposerSummaryTalkingPointErrorCell"
+        static let MeetingComposerSummarySendCellIdentifier = "MeetingComposerSummarySendCell"
+    }
+    
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        if identifier == Storyboard.UnwindFromNewlyCreatedMeeting {
+            for talkingPoint in self.meeting.talkingPoints {
+                if !talkingPoint.relevantUsers.contains(CurrentUser.username) {
+                    talkingPoint.relevantUsers.append(CurrentUser.username)
+                }
+            }
+            if !self.meeting.respondedYes.contains(CurrentUser.username) {
+                self.meeting.respondedYes.append(CurrentUser.username)
+            }
+            return self.meeting.send()
+        }
+        
+        return false
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let identifier = segue.identifier {
+            if identifier == Storyboard.UnwindFromNewlyCreatedMeeting {
+                self.tabBarController?.tabBar.hidden = false
+                self.navigationController?.popViewControllerAnimated(true)
+            }
+        }
+//        if let otvc = segue.destinationViewController as? OrganizingTableViewController {
+//            if let identifier = segue.identifier {
+//                if identifier == Storyboard.UnwindFromNewlyCreatedMeeting {
+//                    otvc.meetings[1].append(meeting)
+//                }
+//            }
+//        }
+    }
+    
     // MARK: UITableViewDataSource
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 5
+        return 6
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 4 {
+            if meeting.talkingPoints.isEmpty {
+                return 1
+            }
             return meeting.talkingPoints.count
         }
         return 1
@@ -125,9 +115,16 @@ class MeetingComposerSummaryTableViewController: MeetTableViewController {
             let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.MeetingComposerSummaryTalkingPointsTitleCellIdentifier, forIndexPath: indexPath)
             return cell
         case 4:
+            if meeting.talkingPoints.isEmpty {
+                return tableView.dequeueReusableCellWithIdentifier(Storyboard.MeetingComposerSummaryTalkingPointErrorCellIdentifier, forIndexPath: indexPath)
+            }
             let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.MeetingComposerSummaryTalkingPointCellIdentifier, forIndexPath: indexPath) as! MeetingComposerSummaryTalkingPointCell
             cell.talkingPoint = meeting.talkingPoints[indexPath.row]
             return cell
+        case 5:
+            let sendCell = tableView.dequeueReusableCellWithIdentifier(Storyboard.MeetingComposerSummarySendCellIdentifier, forIndexPath: indexPath) as! MeetingComposerSummarySendCell
+            sendCell.isSendEnabled = self.meeting.isReadyToSend()
+            return sendCell
         default:
             return UITableViewCell()
         }

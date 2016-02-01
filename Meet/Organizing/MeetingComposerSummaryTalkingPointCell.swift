@@ -12,7 +12,7 @@ class MeetingComposerSummaryTalkingPointCell: UITableViewCell {
     
     // MARK: Public API
     
-    var talkingPoint: String? {
+    var talkingPoint: TalkingPoint? {
         didSet {
             updateUI()
         }
@@ -28,7 +28,7 @@ class MeetingComposerSummaryTalkingPointCell: UITableViewCell {
         talkingPointLabel.text = nil
         
         if let talkingPoint = self.talkingPoint {
-            talkingPointLabel.text = talkingPoint
+            talkingPointLabel.text = talkingPoint.text
         }
         
     }

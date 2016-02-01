@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MeetingComposerInformationTableViewController: MeetTableViewController {
+class MeetingComposerInformationTableViewController: MeetingComposerTableViewController, UITextFieldDelegate {
     
     // MARK: Public API
     
@@ -18,8 +18,6 @@ class MeetingComposerInformationTableViewController: MeetTableViewController {
         }
     }
     
-    var status: String = "Creating"
-    
     // MARK: Outlets
     
     @IBOutlet weak var titleField: UITextField!
@@ -27,40 +25,67 @@ class MeetingComposerInformationTableViewController: MeetTableViewController {
     @IBOutlet weak var durationField: UITextField!
     @IBOutlet weak var locationField: UITextField!
 
+    @IBOutlet weak var fakePageControl: UIPageControl!
+    
     // MARK: View Controller Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // TODO: remove
-        print("meeting \(meeting)")
-        
         updateUI()
+        
+        titleField.delegate = self
+        durationField.delegate = self
+        locationField.delegate = self
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        fakePageControl.hidden = true
+        registerForKeyboardNotifications()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        deregisterFromKeyboardNotifications()
+        saveModel()
+    }
+    
+    override func saveModel() {
+        updateMeetingData(self.meeting)
+        updateMeetingData(self.meetingDataSource.meeting)
     }
     
     // MARK: Storyboard Connectivity
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let tptvc = segue.destinationViewController as? TalkingPointsTableViewController {
-            meeting.title = titleField.text
-            if let durationStr = durationField.text {
-                meeting.duration = Int(durationStr)
-            }
-            meeting.location = locationField.text
-            tptvc.meeting = meeting
-            tptvc.status = status
+    private func updateMeetingData(meeting: Meeting) {
+        meeting.title = getText(titleField)
+        if let durationText = getText(durationField) {
+            meeting.duration = Int(durationText)
+        } else {
+            meeting.duration = nil
         }
+        meeting.location = getText(locationField)
+    }
+    
+    private func getText(textField: UITextField) -> String? {
+        if let text = textField.text {
+            if !text.isEmpty {
+                return text
+            }
+        }
+        return nil
     }
     
     @IBAction func datePicked(segue: UIStoryboardSegue) {
-        // TODO: remove
-        print("date picked: \(meeting)")
+        print("date picked...")
         updateDate()
     }
     
     @IBAction func datePickCancelled(segue: UIStoryboardSegue) {
         // Empty.
     }
+    
+    // TODO: make keyboard disappear when hit return
     
     // MARK: GUI
     
@@ -80,14 +105,50 @@ class MeetingComposerInformationTableViewController: MeetTableViewController {
                 locationField.text = location
             }
         }
-        print("finished updating")
     }
     
+    // TODO: fix bug where date not updated
+    // TODO: date in 15 minute increments and don't allow past dates
+    
     private func updateDate() {
+        print("updating date...")
         if let dateButton = dateButton, startDate = meeting.startDate {
+            print("to...\(startDate)")
             dateButton.setTitle(DateHelper.getDateEntryString(startDate), forState: .Normal)
             dateButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
         }
     }
+    
+    // MARK: Text Field Delegate
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        fakePageControl.hidden = true
+        self.view.endEditing(true)
+        return false
+    }
+    
+    func registerForKeyboardNotifications() {
+        //Adding notifies on keyboard appearing
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWasShown:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillBeHidden:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    
+    func deregisterFromKeyboardNotifications() {
+        //Removing notifies on keyboard appearing
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func keyboardWasShown(notification: NSNotification) {
+        fakePageControl.hidden = false
+    }
+    
+    
+    func keyboardWillBeHidden(notification: NSNotification) {
+        fakePageControl.hidden = true
+        self.view.endEditing(true)
+    }
+
 }
 

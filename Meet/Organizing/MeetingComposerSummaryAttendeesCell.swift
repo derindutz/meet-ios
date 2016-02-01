@@ -20,20 +20,26 @@ class MeetingComposerSummaryAttendeesCell: UITableViewCell {
     
     // MARK: Outlets
     
-    @IBOutlet weak var secondAttendeeLabel: UILabel!
-    @IBOutlet weak var secondAttendeeImage: UIImageView!
+    @IBOutlet weak var attendeeLabel: UILabel!
+    @IBOutlet weak var attendeeScrollView: UserScrollView!
     
     // MARK: GUI
     
     private func updateUI() {
         if let usernames = attendeeUsernames {
-            for username in usernames {
-                if let user = UserDatabase.getUser(username) {
-                    secondAttendeeLabel.text = "\(user.fullName)"
+            if usernames.count > 0 {
+                if let attendeeView = attendeeScrollView {
+                    attendeeView.users = usernames
+                    attendeeLabel.hidden = true
                     return
                 }
             }
         }
-
+        
+        displayNullState()
+    }
+    
+    private func displayNullState() {
+        attendeeLabel.hidden = false
     }
 }

@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import ContactsUI
 
-class AttendeesTableViewController: MeetTableViewController {
+class AttendeesTableViewController: MeetingComposerTableViewController, CNContactPickerDelegate {
     
     // MARK: Public API
     
@@ -17,8 +18,6 @@ class AttendeesTableViewController: MeetTableViewController {
             tableView.reloadData()
         }
     }
-    
-    var status: String = "Creating"
     
     // MARK: Constants
     
@@ -38,6 +37,15 @@ class AttendeesTableViewController: MeetTableViewController {
         self.tableView.estimatedRowHeight = 50.0
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        saveModel()
+        return super.viewWillDisappear(animated)
+    }
+    
+    override func saveModel() {
+        self.meetingDataSource.meeting.attendees = self.meeting.attendees
+    }
+    
     @IBAction func newAttendeeAdded(segue: UIStoryboardSegue) {
         tableView.reloadData()
     }
@@ -46,19 +54,10 @@ class AttendeesTableViewController: MeetTableViewController {
         // Empty.
     }
     
-    // MARK: Storyboard Connectivity
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let mcstvc = segue.destinationViewController as? MeetingComposerSummaryTableViewController {
-            mcstvc.meeting = meeting
-            mcstvc.status = status
-        }
-    }
-    
     // MARK: UITableViewDataSource
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 4
+        return 3
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -77,15 +76,41 @@ class AttendeesTableViewController: MeetTableViewController {
         case 1:
             let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.AttendeeCellIdentifier, forIndexPath: indexPath) as! AttendeeTableViewCell
             cell.attendeeUsername = meeting.attendees[indexPath.row]
+            cell.row = indexPath.row
+            cell.delegate = self
             return cell
         case 2:
             let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.NewAttendeeFromContactsCellIdentifier, forIndexPath: indexPath)
             return cell
-        case 3:
-            let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.NewAttendeeByNumberCellIdentifier, forIndexPath: indexPath)
-            return cell
         default:
             return UITableViewCell()
         }
+    }
+    
+    func removeAttendee(row: Int) {
+        self.meeting.attendees.removeAtIndex(row)
+        tableView.reloadData()
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        switch indexPath.section {
+        case 2:
+            let contactPickerViewController = CNContactPickerViewController()
+            contactPickerViewController.delegate = self
+            presentViewController(contactPickerViewController, animated: true, completion: nil)
+        default:
+            break
+        }
+    }
+    
+    func contactPicker(picker: CNContactPickerViewController, didSelectContacts contacts: [CNContact]) {
+        for contact in contacts {
+            if let user = AddressBookHelper.getUser(contact) {
+                if !self.meeting.attendees.contains(user.username!) {
+                    self.meeting.attendees.append(user.username!)
+                }
+            }
+        }
+        tableView.reloadData()
     }
 }

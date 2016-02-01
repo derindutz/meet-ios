@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TalkingPointsTableViewController: MeetTableViewController {
+class TalkingPointsTableViewController: MeetingComposerTableViewController {
     
     // MARK: Public API
     
@@ -17,8 +17,6 @@ class TalkingPointsTableViewController: MeetTableViewController {
             tableView.reloadData()
         }
     }
-    
-    var status: String = "Creating"
     
     // MARK: Constants
     
@@ -35,8 +33,15 @@ class TalkingPointsTableViewController: MeetTableViewController {
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 50.0
-        
-        print("meeting so far: \(meeting)")
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        saveModel()
+        return super.viewWillDisappear(animated)
+    }
+    
+    override func saveModel() {
+        self.meetingDataSource.meeting.talkingPoints = self.meeting.talkingPoints
     }
     
     @IBAction func newTalkingPointComposed(segue: UIStoryboardSegue) {
@@ -45,15 +50,6 @@ class TalkingPointsTableViewController: MeetTableViewController {
     
     @IBAction func cancelComposeTalkingPoint(segue: UIStoryboardSegue) {
         // Empty.
-    }
-    
-    // MARK: Storyboard Connectivity
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let atvc = segue.destinationViewController as? AttendeesTableViewController {
-            atvc.meeting = meeting
-            atvc.status = status
-        }
     }
     
     // MARK: UITableViewDataSource
@@ -81,6 +77,8 @@ class TalkingPointsTableViewController: MeetTableViewController {
             let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.TalkingPointCellIdentifier, forIndexPath: indexPath) as! TalkingPointsTableViewCell
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.talkingPoint = meeting.talkingPoints[indexPath.row]
+            cell.delegate = self
+            cell.row = indexPath.row
             return cell
         case 2:
             let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.NewTalkingPointCellIdentifier, forIndexPath: indexPath)
@@ -88,6 +86,11 @@ class TalkingPointsTableViewController: MeetTableViewController {
         default:
             return UITableViewCell()
         }
+    }
+    
+    func removeTalkingPoint(row: Int) {
+        self.meeting.talkingPoints.removeAtIndex(row)
+        tableView.reloadData()
     }
 }
 

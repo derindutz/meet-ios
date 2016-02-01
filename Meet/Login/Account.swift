@@ -23,6 +23,7 @@ public class Account {
     - returns: Returns true on login success, false otherwise.
     */
     public class func login(username: String, password: String) -> Bool {
+        CurrentUser.username = username
         let login = try? PFUser.logInWithUsername(username, password: password)
         if login != nil {
             do {
@@ -44,9 +45,14 @@ public class Account {
         let dictionary = Locksmith.loadDataForUserAccount(Constants.UserAccount)
         if let userData = dictionary as? [String: String] {
             if let username = userData["username"], password = userData["password"] {
-                PFUser.logInWithUsernameInBackground(username, password: password)
+                do {
+                    try PFUser.logInWithUsername(username, password: password)
+                    CurrentUser.username = username
+                    return true
+                } catch {
+                    return false
+                }
             }
-            return true
         }
         return false
     }
