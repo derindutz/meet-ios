@@ -91,11 +91,11 @@ class LineGraphView: UIView {
         yAxis.moveToPoint(CGPoint(x: graphWidth, y: 0))
         yAxis.stroke()
         
-        let max: NSString = self.maxYValue!.description
-        max.drawAtPoint(CGPoint(x: 0, y: 0), withAttributes: nil)
+        let max: NSString = Int(self.maxYValue!).description
+        max.drawAtPoint(CGPoint(x: 2, y: 0), withAttributes: nil)
         
-        let min: NSString = self.minYValue.description
-        min.drawAtPoint(CGPoint(x: 0, y: graphHeight - 10), withAttributes: nil)
+        let min: NSString = Int(self.minYValue).description
+        min.drawAtPoint(CGPoint(x: 2, y: graphHeight - 11), withAttributes: nil)
         
         CGContextRestoreGState(UIGraphicsGetCurrentContext())
     }

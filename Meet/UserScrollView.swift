@@ -17,7 +17,7 @@ class UserScrollView: UIScrollView {
     }
     
     var is_add_enabled = false {
-        didSet{
+        didSet {
             updateUI()
         }
     }

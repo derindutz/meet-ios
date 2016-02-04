@@ -12,6 +12,12 @@ class MeetingComposerSummaryAttendeesCell: UITableViewCell {
     
     // MARK: Public API
     
+    var is_add_enabled = false {
+        didSet {
+            updateUI()
+        }
+    }
+    
     var delegate: MeetingComposerSummaryTableViewController? {
         didSet {
             updateUI()
@@ -33,7 +39,7 @@ class MeetingComposerSummaryAttendeesCell: UITableViewCell {
     
     private func updateUI() {
         if let attendeeView = attendeeScrollView {
-            attendeeView.is_add_enabled = true
+            attendeeView.is_add_enabled = self.is_add_enabled
             attendeeView.actionDelegate = self.delegate
             if let usernames = attendeeUsernames {
                 attendeeView.users = usernames

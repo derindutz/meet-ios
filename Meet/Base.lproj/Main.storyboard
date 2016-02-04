@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="tnC-fG-MKV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="tnC-fG-MKV">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -1085,7 +1085,7 @@
                     <navigationItem key="navigationItem" id="9Zu-WZ-vVf">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="M1y-UV-tDt">
                             <connections>
-                                <segue destination="T86-Hl-Mor" kind="show" identifier="Segue Create Meeting" id="Sgl-dG-pm5"/>
+                                <segue destination="cDs-Ik-s95" kind="presentation" id="V4c-3T-o1f"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -2727,12 +2727,13 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Send" id="MFF-v1-JEM">
                             <connections>
-                                <action selector="sendMeeting:" destination="dSf-Sq-uZj" id="KhP-n4-FtI"/>
+                                <segue destination="gSw-v1-IMY" kind="unwind" identifier="UnwindNewMeetingComposed" unwindAction="newMeetingComposed:" id="oPw-i3-Lrk"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MI7-Qw-ud9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="gSw-v1-IMY" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3876" y="1828.5"/>
         </scene>
@@ -2868,7 +2869,7 @@
                                 <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qo8-bM-88S" id="pLN-Jd-UgX">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -2876,7 +2877,7 @@
                                 <rect key="frame" x="0.0" y="72" width="600" height="57"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="foF-gS-duB" id="EXe-0S-Agf">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="56"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="56.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="header" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7gt-9P-sNB">
@@ -2926,7 +2927,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ylV-Ha-hc6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2036" y="2076"/>
+            <point key="canvasLocation" x="2026.5" y="2116.5"/>
         </scene>
         <!--organizing-->
         <scene sceneID="DZU-Hc-5Ib">
@@ -3478,7 +3479,7 @@
                     <navigationItem key="navigationItem" id="673-AH-pg7">
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="hZa-WF-4IA">
                             <connections>
-                                <segue destination="T86-Hl-Mor" kind="show" identifier="Segue Edit Meeting From Summary" id="wOT-m5-GSA"/>
+                                <segue destination="cDs-Ik-s95" kind="presentation" id="A72-VQ-NlC"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -4264,7 +4265,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="074-tE-Frj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2922" y="1828.5"/>
+            <point key="canvasLocation" x="3043.5" y="1828.5"/>
         </scene>
     </scenes>
     <resources>
@@ -4283,6 +4284,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="AZr-JY-sOi"/>
-        <segue reference="Sgl-dG-pm5"/>
+        <segue reference="A72-VQ-NlC"/>
     </inferredMetricsTieBreakers>
 </document>

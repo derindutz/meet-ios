@@ -28,11 +28,6 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
         self.tableView.estimatedRowHeight = 100.0
     }
     
-//    override func viewWillAppear(animated: Bool) {
-//        self.meeting = self.meetingDataSource.meeting
-//        return super.viewWillAppear(animated)
-//    }
-    
     // MARK: Outlets
     
     @IBAction func cancelComposeMeeting(sender: UIBarButtonItem) {
@@ -85,7 +80,7 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
     // MARK: Storyboard Connectivity
     
     private struct Storyboard {
-        static let UnwindFromNewlyCreatedMeeting = "Unwind From Newly Created Meeting"
+        static let UnwindNewMeetingComposed = "UnwindNewMeetingComposed"
         static let SegueSetTime = "SegueSetTime"
         static let SegueAddTalkingPoint = "SegueAddTalkingPoint"
         static let MeetingComposerSummaryInformationCellIdentifier = "MeetingComposerSummaryInformationCellIdentifier"
@@ -95,7 +90,7 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        if identifier == Storyboard.UnwindFromNewlyCreatedMeeting {
+        if identifier == Storyboard.UnwindNewMeetingComposed {
             for talkingPoint in self.meeting.talkingPoints {
                 if !talkingPoint.relevantUsers.contains(CurrentUser.username) {
                     talkingPoint.relevantUsers.append(CurrentUser.username)
@@ -114,21 +109,21 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
         return false
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let identifier = segue.identifier {
-            if identifier == Storyboard.UnwindFromNewlyCreatedMeeting {
-                self.tabBarController?.tabBar.hidden = false
-                self.navigationController?.popViewControllerAnimated(true)
-            }
-        }
-//        if let otvc = segue.destinationViewController as? OrganizingTableViewController {
-//            if let identifier = segue.identifier {
-//                if identifier == Storyboard.UnwindFromNewlyCreatedMeeting {
-//                    otvc.meetings[1].append(meeting)
-//                }
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if let identifier = segue.identifier {
+//            if identifier == Storyboard.UnwindNewMeetingComposed {
+//                self.tabBarController?.tabBar.hidden = false
+//                self.navigationController?.popViewControllerAnimated(true)
 //            }
 //        }
-    }
+////        if let otvc = segue.destinationViewController as? OrganizingTableViewController {
+////            if let identifier = segue.identifier {
+////                if identifier == Storyboard.UnwindFromNewlyCreatedMeeting {
+////                    otvc.meetings[1].append(meeting)
+////                }
+////            }
+////        }
+//    }
     
     // MARK: GUI
     
@@ -165,6 +160,7 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
         case 1:
             let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.MeetingComposerSummaryAttendeesCellIdentifier, forIndexPath: indexPath) as! MeetingComposerSummaryAttendeesCell
             cell.selectionStyle = UITableViewCellSelectionStyle.None
+            cell.is_add_enabled = true
             cell.attendeeUsernames = meeting.attendees
             cell.delegate = self
             return cell
