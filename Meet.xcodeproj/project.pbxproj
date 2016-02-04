@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		5F14494B14E3A83BFBFF0C3D /* Pods_Meet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFDDFF544E0EC7FB51C5B1CD /* Pods_Meet.framework */; };
 		9108E2621C028D8D0008C95C /* UpcomingNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9108E2611C028D8D0008C95C /* UpcomingNavigationController.swift */; };
+		91107FD51C62D0C90022D66D /* MeetingComposerSummaryInformationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91107FD41C62D0C90022D66D /* MeetingComposerSummaryInformationCell.swift */; };
+		91107FDB1C62FAC20022D66D /* AddUserButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91107FDA1C62FAC20022D66D /* AddUserButton.swift */; };
 		911337CC1BF93B8A0003EDE2 /* OrganizingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911337CB1BF93B8A0003EDE2 /* OrganizingTableViewController.swift */; };
 		911337D21BF93FFF0003EDE2 /* Meeting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911337D11BF93FFF0003EDE2 /* Meeting.swift */; };
 		911337D41BF9485E0003EDE2 /* MeetingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911337D31BF9485E0003EDE2 /* MeetingTableViewCell.swift */; };
@@ -97,6 +99,8 @@
 /* Begin PBXFileReference section */
 		45B48A6B57988F9BA8166F16 /* Pods-Meet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meet.release.xcconfig"; path = "Pods/Target Support Files/Pods-Meet/Pods-Meet.release.xcconfig"; sourceTree = "<group>"; };
 		9108E2611C028D8D0008C95C /* UpcomingNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpcomingNavigationController.swift; sourceTree = "<group>"; };
+		91107FD41C62D0C90022D66D /* MeetingComposerSummaryInformationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MeetingComposerSummaryInformationCell.swift; path = Organizing/MeetingComposerSummaryInformationCell.swift; sourceTree = "<group>"; };
+		91107FDA1C62FAC20022D66D /* AddUserButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddUserButton.swift; sourceTree = "<group>"; };
 		911337CB1BF93B8A0003EDE2 /* OrganizingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrganizingTableViewController.swift; path = Organizing/OrganizingTableViewController.swift; sourceTree = "<group>"; };
 		911337D11BF93FFF0003EDE2 /* Meeting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meeting.swift; sourceTree = "<group>"; };
 		911337D31BF9485E0003EDE2 /* MeetingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingTableViewCell.swift; sourceTree = "<group>"; };
@@ -254,6 +258,7 @@
 				917AF2B01BFAF6450054B7AE /* MeetingComposerSummaryDateCell.swift */,
 				917AF2B21BFAF89A0054B7AE /* MeetingComposerSummaryAttendeesCell.swift */,
 				919C97031C0BBF34004E54EF /* MeetingComposerSummarySendCell.swift */,
+				91107FD41C62D0C90022D66D /* MeetingComposerSummaryInformationCell.swift */,
 			);
 			name = "Meeting Composer Summary";
 			sourceTree = "<group>";
@@ -323,6 +328,7 @@
 				91D25E411BF6C3F5004BFBF1 /* Main.storyboard */,
 				91468C381C0300030070DB86 /* MeetColor.swift */,
 				9187EE971C09201100E43B30 /* UserScrollView.swift */,
+				91107FDA1C62FAC20022D66D /* AddUserButton.swift */,
 				9187EE991C0927BA00E43B30 /* UserProfileNameView.swift */,
 				91FAED951C0F88CA00B00619 /* ProfileView.swift */,
 				91FAED8F1C0F803800B00619 /* TalkingPointWithProfilesCell.swift */,
@@ -499,7 +505,7 @@
 				TargetAttributes = {
 					91D25E391BF6C3F5004BFBF1 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = W5WDCZ7924;
+						DevelopmentTeam = U3PG6AF4JV;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 0;
@@ -631,6 +637,7 @@
 				91FAED941C0F862E00B00619 /* HorizontalProfilesView.swift in Sources */,
 				91C3900D1C02E0AA000E52C4 /* DashboardTableViewController.swift in Sources */,
 				917AF2BA1BFB19590054B7AE /* AddAttendeeByNumberTableViewController.swift in Sources */,
+				91107FD51C62D0C90022D66D /* MeetingComposerSummaryInformationCell.swift in Sources */,
 				91FAED921C0F82A100B00619 /* LabelAboveViewView.swift in Sources */,
 				917AF2A91BFA55640054B7AE /* AttendeeTableViewCell.swift in Sources */,
 				914CF35F1C068D0D00679C61 /* LineGraphView.swift in Sources */,
@@ -660,6 +667,7 @@
 				91786FE41C03176A0015CB82 /* ResponseTableViewController.swift in Sources */,
 				911337D81BF954BB0003EDE2 /* TalkingPointsTableViewCell.swift in Sources */,
 				91FAED961C0F88CA00B00619 /* ProfileView.swift in Sources */,
+				91107FDB1C62FAC20022D66D /* AddUserButton.swift in Sources */,
 				9187EE9A1C0927BA00E43B30 /* UserProfileNameView.swift in Sources */,
 				916B7FDE1BFBEA950031DFCE /* MeetNavigationController.swift in Sources */,
 				917AF2AB1BFA59C70054B7AE /* MeetingComposerSummaryTableViewController.swift in Sources */,

@@ -18,6 +18,8 @@ class LineGraphView: UIView {
     
     var color = MeetColor.LightHighlight { didSet { setNeedsDisplay() } }
     
+    var color2 = MeetColor.LightestBackground { didSet { setNeedsDisplay() } }
+    
     var lineWidth: CGFloat = 1.5 { didSet { setNeedsDisplay() } }
     
     var minYValue: CGFloat = 0 { didSet { setNeedsDisplay() } }
@@ -25,6 +27,9 @@ class LineGraphView: UIView {
     
     var minXValue: CGFloat = 0 { didSet { setNeedsDisplay() } }
     var maxXValue: CGFloat? { didSet { setNeedsDisplay() } }
+    
+    var graphHeight: CGFloat = 0
+    var graphWidth: CGFloat = 0
     
     @IBInspectable
     var scaleX: CGFloat = 50 { didSet { setNeedsDisplay() } }
@@ -40,12 +45,12 @@ class LineGraphView: UIView {
         }
         
         if let maxYVal = self.maxYValue {
-            let graphHeight = rect.height - rect.origin.y - (self.lineWidth * 2.0)
+            graphHeight = rect.height - rect.origin.y - (self.lineWidth * 2.0)
             self.scaleY = graphHeight / (maxYVal - self.minYValue)
         }
         
         if let maxXVal = self.maxXValue {
-            let graphWidth = rect.width - rect.origin.x
+            graphWidth = rect.width - rect.origin.x
             self.scaleX = graphWidth / (maxXVal - self.minXValue)
         }
         
@@ -71,7 +76,27 @@ class LineGraphView: UIView {
                 }
             }
         }
+        
         graphPath.stroke()
+        
+        color2.set()
+        let yAxis = UIBezierPath()
+        let dashes: [CGFloat] = [yAxis.lineWidth * 0, yAxis.lineWidth * 2]
+        yAxis.setLineDash(dashes, count: dashes.count, phase: 0)
+        yAxis.lineCapStyle = CGLineCap.Round
+        yAxis.lineWidth = self.lineWidth
+        yAxis.addLineToPoint(CGPoint(x: 0, y: 0))
+        yAxis.moveToPoint(CGPoint(x: 0, y: 0))
+        yAxis.addLineToPoint(CGPoint(x: graphWidth, y: 0))
+        yAxis.moveToPoint(CGPoint(x: graphWidth, y: 0))
+        yAxis.stroke()
+        
+        let max: NSString = self.maxYValue!.description
+        max.drawAtPoint(CGPoint(x: 0, y: 0), withAttributes: nil)
+        
+        let min: NSString = self.minYValue.description
+        min.drawAtPoint(CGPoint(x: 0, y: graphHeight - 10), withAttributes: nil)
+        
         CGContextRestoreGState(UIGraphicsGetCurrentContext())
     }
 }

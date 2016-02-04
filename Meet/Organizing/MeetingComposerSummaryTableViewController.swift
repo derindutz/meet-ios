@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import ContactsUI
 
-class MeetingComposerSummaryTableViewController: MeetingComposerTableViewController {
+class MeetingComposerSummaryTableViewController: MeetingComposerTableViewController, CNContactPickerDelegate {
 
     // MARK: Public API
     
@@ -34,15 +35,9 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
     
     // MARK: Storyboard Connectivity
     
-    @IBOutlet weak var meetingNameField: UITextField!
-    @IBOutlet weak var timeButton: UIButton!
-    @IBOutlet weak var durationField: UITextField!
-    @IBOutlet weak var locationField: UITextField!
-    
     private struct Storyboard {
         static let UnwindFromNewlyCreatedMeeting = "Unwind From Newly Created Meeting"
-        static let MeetingComposerSummaryTitleCellIdentifier = "MeetingComposerSummaryTitleCell"
-        static let MeetingComposerSummaryDateCellIdentifier = "MeetingComposerSummaryDateCell"
+        static let MeetingComposerSummaryInformationCellIdentifier = "MeetingComposerSummaryInformationCellIdentifier"
         static let MeetingComposerSummaryAttendeesCellIdentifier = "MeetingComposerSummaryAttendeesCell"
         static let MeetingComposerSummaryTalkingPointsTitleCellIdentifier = "MeetingComposerSummaryTalkingPointsTitleCell"
         static let MeetingComposerSummaryTalkingPointCellIdentifier = "MeetingComposerSummaryTalkingPointCell"
@@ -68,7 +63,6 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
     @IBAction func sendMeeting(sender: UIBarButtonItem) {
         print("sent")
     }
-    
     
     @IBAction func cancelComposeMeeting(sender: UIBarButtonItem) {
         let alert = UIAlertController()
@@ -122,11 +116,11 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
     // MARK: UITableViewDataSource
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 5
+        return 4
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 4 {
+        if section == 3 {
             if meeting.talkingPoints.isEmpty {
                 return 1
             }
@@ -138,25 +132,17 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
-            let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.MeetingComposerSummaryTitleCellIdentifier, forIndexPath: indexPath) as! MeetingComposerSummaryTitleCell
-            cell.title = meeting.title
-            if let duration = meeting.duration {
-                cell.time = "\(duration) min"
-            }
+            let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.MeetingComposerSummaryInformationCellIdentifier, forIndexPath: indexPath) as! MeetingComposerSummaryInformationCell
             return cell
         case 1:
-            let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.MeetingComposerSummaryDateCellIdentifier, forIndexPath: indexPath) as! MeetingComposerSummaryDateCell
-            cell.date = meeting.startDate
-            cell.location = meeting.location
-            return cell
-        case 2:
             let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.MeetingComposerSummaryAttendeesCellIdentifier, forIndexPath: indexPath) as! MeetingComposerSummaryAttendeesCell
             cell.attendeeUsernames = meeting.attendees
+            cell.delegate = self
             return cell
-        case 3:
+        case 2:
             let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.MeetingComposerSummaryTalkingPointsTitleCellIdentifier, forIndexPath: indexPath)
             return cell
-        case 4:
+        case 3:
             if meeting.talkingPoints.isEmpty {
                 return tableView.dequeueReusableCellWithIdentifier(Storyboard.MeetingComposerSummaryTalkingPointErrorCellIdentifier, forIndexPath: indexPath)
             }
@@ -166,6 +152,25 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
         default:
             return UITableViewCell()
         }
+    }
+    
+    func addUser(sender: UIButton!) {
+        let contactPickerViewController = CNContactPickerViewController()
+        contactPickerViewController.delegate = self
+        presentViewController(contactPickerViewController, animated: true, completion: nil)
+    }
+    
+    // MARK: CNContactPicker Delegate
+    
+    func contactPicker(picker: CNContactPickerViewController, didSelectContacts contacts: [CNContact]) {
+        for contact in contacts {
+            if let user = AddressBookHelper.getUser(contact) {
+                if !self.meeting.attendees.contains(user.username!) {
+                    self.meeting.attendees.append(user.username!)
+                }
+            }
+        }
+        tableView.reloadData()
     }
 }
 
