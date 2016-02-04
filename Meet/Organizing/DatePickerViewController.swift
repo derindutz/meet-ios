@@ -36,8 +36,8 @@ class DatePickerViewController: MeetViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let identifier = segue.identifier {
             if identifier == Storyboard.DatePicked {
-                if let mcitvc = segue.destinationViewController as? MeetingComposerInformationTableViewController {
-                    mcitvc.meeting.startDate = datePicker.date
+                if let mcstvc = segue.destinationViewController as? MeetingComposerSummaryTableViewController {
+                    mcstvc.meeting.startDate = datePicker.date
                 }
             }
         }

@@ -77,7 +77,6 @@ class MeetingComposerInformationTableViewController: MeetingComposerTableViewCon
     }
     
     @IBAction func datePicked(segue: UIStoryboardSegue) {
-        print("date picked...")
         updateDate()
     }
     

@@ -15,7 +15,7 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
     
     var meeting: Meeting = Meeting() {
         didSet {
-            tableView.reloadData()
+            updateUI()
         }
     }
     
@@ -23,7 +23,7 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        updateUI()
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 100.0
     }
@@ -33,36 +33,7 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
 //        return super.viewWillAppear(animated)
 //    }
     
-    // MARK: Storyboard Connectivity
-    
-    private struct Storyboard {
-        static let UnwindFromNewlyCreatedMeeting = "Unwind From Newly Created Meeting"
-        static let MeetingComposerSummaryInformationCellIdentifier = "MeetingComposerSummaryInformationCellIdentifier"
-        static let MeetingComposerSummaryAttendeesCellIdentifier = "MeetingComposerSummaryAttendeesCell"
-        static let MeetingComposerSummaryTalkingPointsTitleCellIdentifier = "MeetingComposerSummaryTalkingPointsTitleCell"
-        static let MeetingComposerSummaryTalkingPointCellIdentifier = "MeetingComposerSummaryTalkingPointCell"
-        static let MeetingComposerSummaryTalkingPointErrorCellIdentifier = "MeetingComposerSummaryTalkingPointErrorCell"
-    }
-    
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        if identifier == Storyboard.UnwindFromNewlyCreatedMeeting {
-            for talkingPoint in self.meeting.talkingPoints {
-                if !talkingPoint.relevantUsers.contains(CurrentUser.username) {
-                    talkingPoint.relevantUsers.append(CurrentUser.username)
-                }
-            }
-            if !self.meeting.respondedYes.contains(CurrentUser.username) {
-                self.meeting.respondedYes.append(CurrentUser.username)
-            }
-            return self.meeting.send()
-        }
-        
-        return false
-    }
-    
-    @IBAction func sendMeeting(sender: UIBarButtonItem) {
-        print("sent")
-    }
+    // MARK: Outlets
     
     @IBAction func cancelComposeMeeting(sender: UIBarButtonItem) {
         let alert = UIAlertController()
@@ -95,7 +66,53 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
         presentViewController(alert, animated: true, completion: nil)
     }
     
+    @IBAction func newTalkingPointComposed(segue: UIStoryboardSegue) {
+        updateUI()
+    }
     
+    @IBAction func cancelComposeTalkingPoint(segue: UIStoryboardSegue) {
+        // Empty.
+    }
+    
+    @IBAction func datePicked(segue: UIStoryboardSegue) {
+        updateUI()
+    }
+    
+    @IBAction func datePickCancelled(segue: UIStoryboardSegue) {
+        // Empty.
+    }
+    
+    // MARK: Storyboard Connectivity
+    
+    private struct Storyboard {
+        static let UnwindFromNewlyCreatedMeeting = "Unwind From Newly Created Meeting"
+        static let SegueSetTime = "SegueSetTime"
+        static let SegueAddTalkingPoint = "SegueAddTalkingPoint"
+        static let MeetingComposerSummaryInformationCellIdentifier = "MeetingComposerSummaryInformationCellIdentifier"
+        static let MeetingComposerSummaryAttendeesCellIdentifier = "MeetingComposerSummaryAttendeesCell"
+        static let MeetingComposerSummaryNewTalkingPointCellIdentifier = "NewTalkingPointCell"
+        static let MeetingComposerSummaryTalkingPointCellIdentifier = "TalkingPointCell"
+    }
+    
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        if identifier == Storyboard.UnwindFromNewlyCreatedMeeting {
+            for talkingPoint in self.meeting.talkingPoints {
+                if !talkingPoint.relevantUsers.contains(CurrentUser.username) {
+                    talkingPoint.relevantUsers.append(CurrentUser.username)
+                }
+            }
+            if !self.meeting.respondedYes.contains(CurrentUser.username) {
+                self.meeting.respondedYes.append(CurrentUser.username)
+            }
+            return self.meeting.send()
+        } else if identifier == Storyboard.SegueAddTalkingPoint {
+            return true
+        } else if identifier == Storyboard.SegueSetTime {
+            return true
+        }
+        
+        return false
+    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let identifier = segue.identifier {
@@ -113,6 +130,17 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
 //        }
     }
     
+    // MARK: GUI
+    
+    private func updateUI() {
+        tableView.reloadData()
+        updateNavigation()
+    }
+    
+    func updateNavigation() {
+        self.navigationItem.rightBarButtonItem?.enabled = self.meeting.isReadyToSend()
+    }
+    
     // MARK: UITableViewDataSource
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -121,9 +149,6 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 3 {
-            if meeting.talkingPoints.isEmpty {
-                return 1
-            }
             return meeting.talkingPoints.count
         }
         return 1
@@ -133,21 +158,23 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
         switch indexPath.section {
         case 0:
             let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.MeetingComposerSummaryInformationCellIdentifier, forIndexPath: indexPath) as! MeetingComposerSummaryInformationCell
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            cell.meeting = self.meeting
+            cell.delegate = self
             return cell
         case 1:
             let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.MeetingComposerSummaryAttendeesCellIdentifier, forIndexPath: indexPath) as! MeetingComposerSummaryAttendeesCell
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.attendeeUsernames = meeting.attendees
             cell.delegate = self
             return cell
         case 2:
-            let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.MeetingComposerSummaryTalkingPointsTitleCellIdentifier, forIndexPath: indexPath)
+            let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.MeetingComposerSummaryNewTalkingPointCellIdentifier, forIndexPath: indexPath)
             return cell
         case 3:
-            if meeting.talkingPoints.isEmpty {
-                return tableView.dequeueReusableCellWithIdentifier(Storyboard.MeetingComposerSummaryTalkingPointErrorCellIdentifier, forIndexPath: indexPath)
-            }
-            let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.MeetingComposerSummaryTalkingPointCellIdentifier, forIndexPath: indexPath) as! MeetingComposerSummaryTalkingPointCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.MeetingComposerSummaryTalkingPointCellIdentifier, forIndexPath: indexPath) as! TalkingPointsTableViewCell
             cell.talkingPoint = meeting.talkingPoints[indexPath.row]
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             return cell
         default:
             return UITableViewCell()

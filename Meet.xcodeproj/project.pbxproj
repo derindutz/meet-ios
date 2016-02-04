@@ -253,12 +253,12 @@
 			isa = PBXGroup;
 			children = (
 				917AF2AA1BFA59C70054B7AE /* MeetingComposerSummaryTableViewController.swift */,
+				91107FD41C62D0C90022D66D /* MeetingComposerSummaryInformationCell.swift */,
 				917AF2AC1BFAF27A0054B7AE /* MeetingComposerSummaryTalkingPointCell.swift */,
 				917AF2AE1BFAF4AA0054B7AE /* MeetingComposerSummaryTitleCell.swift */,
 				917AF2B01BFAF6450054B7AE /* MeetingComposerSummaryDateCell.swift */,
 				917AF2B21BFAF89A0054B7AE /* MeetingComposerSummaryAttendeesCell.swift */,
 				919C97031C0BBF34004E54EF /* MeetingComposerSummarySendCell.swift */,
-				91107FD41C62D0C90022D66D /* MeetingComposerSummaryInformationCell.swift */,
 			);
 			name = "Meeting Composer Summary";
 			sourceTree = "<group>";
@@ -505,7 +505,7 @@
 				TargetAttributes = {
 					91D25E391BF6C3F5004BFBF1 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = U3PG6AF4JV;
+						DevelopmentTeam = W5WDCZ7924;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 0;

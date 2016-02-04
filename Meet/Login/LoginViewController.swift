@@ -20,10 +20,18 @@ class LoginViewController: MeetViewController, UITextFieldDelegate {
     
     @IBOutlet weak var actionButton: UIButton!
     
+    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    
     // MARK: View Controller Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        activityIndicator.hidden = true
+        activityIndicator.center = self.view.center
+        
         
         nameTextField.delegate = self
         nameTextField.becomeFirstResponder()
@@ -93,6 +101,8 @@ class LoginViewController: MeetViewController, UITextFieldDelegate {
     }
     
     @IBAction func loginPressed(sender: UIButton) {
+        activityIndicator.hidden = false
+        activityIndicator.startAnimating()
         updateUser()
         if self.user != nil {
             attemptLoginWithKeychain()
@@ -123,6 +133,8 @@ class LoginViewController: MeetViewController, UITextFieldDelegate {
     
     private func performLogin() {
         print("performing login...")
+        activityIndicator.hidden = false
+        activityIndicator.startAnimating()
         MeetingDatabase.loadMeetings()
         performSegueWithIdentifier(Constants.SegueLogin, sender: self)
     }

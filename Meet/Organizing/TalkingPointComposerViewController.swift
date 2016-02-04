@@ -50,8 +50,8 @@ class TalkingPointComposerViewController: MeetViewController, UITextViewDelegate
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let identifier = segue.identifier {
             if identifier == Storyboard.UnwindFromNewlyCreatedTalkingPoint {
-                if let tptvc = segue.destinationViewController as? TalkingPointsTableViewController {
-                    tptvc.meeting.talkingPoints.append(TalkingPoint(text: textView.text))
+                if let mcstvc = segue.destinationViewController as? MeetingComposerSummaryTableViewController {
+                    mcstvc.meeting.talkingPoints.append(TalkingPoint(text: textView.text))
                 }
             }
         }

@@ -27,6 +27,7 @@ class DashboardStatisticsTableViewCell: UITableViewCell, LineGraphViewDataSource
     @IBOutlet weak var currentPeriodLabel: UILabel!
     @IBOutlet weak var timeInCurrentPeriodLabel: UILabel!
     
+    // These temporarily represent the dollars saved
     @IBOutlet weak var timeInPrevPeriodLabel: UILabel!
     @IBOutlet weak var prevLabel: UILabel!
     private var previousTimeArcView: ArcView?
@@ -72,26 +73,26 @@ class DashboardStatisticsTableViewCell: UITableViewCell, LineGraphViewDataSource
     // TODO: test weirdly large numbers in text fields
     
     func updateArcView() {
-        removeArcView()
-        if let sum = self.currentSum, prevSum = self.previousSum {
-            if sum < prevSum {
-                let startAngle = -CGFloat(M_PI / 2.0)
-                let endAngle = ((CGFloat(sum) / CGFloat(prevSum)) * CGFloat(M_PI * 2.0)) + startAngle
-                self.previousTimeArcView = ArcView(frame: getArcViewFrame())
-                self.previousTimeArcView!.setup(startAngle, endAngle: endAngle)
-            } else {
-                self.previousTimeArcView = ArcView(frame: getArcViewFrame())
-                self.previousTimeArcView!.setup()
-            }
-            self.addSubview(self.previousTimeArcView!)
-            self.previousTimeArcView!.animateArc(1.0)
-        }
+//        removeArcView()
+//        if let sum = self.currentSum, prevSum = self.previousSum {
+//            if sum < prevSum {
+//                let startAngle = -CGFloat(M_PI / 2.0)
+//                let endAngle = ((CGFloat(sum) / CGFloat(prevSum)) * CGFloat(M_PI * 2.0)) + startAngle
+//                self.previousTimeArcView = ArcView(frame: getArcViewFrame())
+//                self.previousTimeArcView!.setup(startAngle, endAngle: endAngle)
+//            } else {
+//                self.previousTimeArcView = ArcView(frame: getArcViewFrame())
+//                self.previousTimeArcView!.setup()
+//            }
+//            self.addSubview(self.previousTimeArcView!)
+//            self.previousTimeArcView!.animateArc(1.0)
+//        }
     }
     
     private func getArcViewFrame() -> CGRect {
-        let circleDiameter = CGFloat(68)
-        let circleX = self.frame.origin.x + self.frame.width - circleDiameter - 20
-        let circleY = self.frame.origin.y + 20
+        let circleDiameter = CGFloat(88)
+        let circleX = self.frame.origin.x + self.frame.width - circleDiameter - 10
+        let circleY = self.frame.origin.y + 10
         return CGRectMake(circleX, circleY, circleDiameter, circleDiameter)
     }
     
@@ -115,6 +116,10 @@ class DashboardStatisticsTableViewCell: UITableViewCell, LineGraphViewDataSource
     }
     
     private func updateData() {
+        self.percentDifferenceLabel.hidden = true
+        self.percentSignLabel.hidden = true
+        self.percentDifferenceTriangleImageView.hidden = true
+        
         let allTimeSpentArray = MeetingDatabase.getDailyTimeSpentInMeetings()
         let numDaysInCurrentPeriod = getNumDays(self.period, total: allTimeSpentArray.count)
         self.currentSlice = Array(allTimeSpentArray.suffix(numDaysInCurrentPeriod))
