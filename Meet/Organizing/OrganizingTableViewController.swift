@@ -117,11 +117,10 @@ class OrganizingTableViewController: MeetTableViewController {
         }
         
         let selectedMeeting = meetings[indexPath.section][indexPath.row]
-        if selectedMeeting.status == .Unsent {
-            let composeMeetingVC = self.storyboard?.instantiateViewControllerWithIdentifier(Constants.MeetingComposerVCIdentifier) as! ComposeMeetingViewController
+        if selectedMeeting.status == .Draft {
+            let composeMeetingVC = self.storyboard?.instantiateViewControllerWithIdentifier(Constants.MeetingComposerVCIdentifier) as! MeetingComposerNavigationController
             composeMeetingVC.meeting = selectedMeeting.copy()
-            setBackButtonLabelEmpty()
-            self.navigationController?.pushViewController(composeMeetingVC, animated: true)
+            self.navigationController?.presentViewController(composeMeetingVC, animated: true, completion: nil)
         } else {
             if selectedMeeting.respondedYes.contains(CurrentUser.username) {
                 let meetingSummaryVC = self.storyboard?.instantiateViewControllerWithIdentifier(Constants.MeetingSummaryVCIdentifier) as! MeetingSummaryTableViewController
@@ -300,6 +299,6 @@ class OrganizingTableViewController: MeetTableViewController {
         static let HeaderCellIdentifier = "MeetTableViewHeaderCell"
         static let MeetingSummaryVCIdentifier = "MeetingSummaryTableViewController"
         static let MeetingResponseVCIdentifier = "ResponseTableViewController"
-        static let MeetingComposerVCIdentifier = "ComposeMeetingViewController"
+        static let MeetingComposerVCIdentifier = "MeetingComposerNavigationViewController"
     }
 }

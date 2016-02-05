@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="tnC-fG-MKV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="tnC-fG-MKV">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -2869,7 +2869,7 @@
                                 <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qo8-bM-88S" id="pLN-Jd-UgX">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -2877,7 +2877,7 @@
                                 <rect key="frame" x="0.0" y="72" width="600" height="57"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="foF-gS-duB" id="EXe-0S-Agf">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="56.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="56"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="header" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7gt-9P-sNB">
@@ -3476,16 +3476,7 @@
                             <outlet property="delegate" destination="Ugr-WY-4V8" id="XUK-jr-FB5"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="673-AH-pg7">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="hZa-WF-4IA">
-                            <connections>
-                                <segue destination="cDs-Ik-s95" kind="presentation" id="A72-VQ-NlC"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="editBarButton" destination="hZa-WF-4IA" id="bDd-ZB-VdM"/>
-                    </connections>
+                    <navigationItem key="navigationItem" id="673-AH-pg7"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y2b-bV-kJ9" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="37t-pf-qdx" userLabel="Exit" sceneMemberID="exit"/>
@@ -4248,10 +4239,10 @@
             </objects>
             <point key="canvasLocation" x="2934" y="2956.5"/>
         </scene>
-        <!--Meet Navigation Controller-->
+        <!--Meeting Composer Navigation Controller-->
         <scene sceneID="Duw-Kd-hpY">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cDs-Ik-s95" customClass="MeetNavigationController" customModule="Meet" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MeetingComposerNavigationViewController" automaticallyAdjustsScrollViewInsets="NO" id="cDs-Ik-s95" customClass="MeetingComposerNavigationController" customModule="Meet" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Z6b-Di-Hux">
@@ -4284,6 +4275,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="AZr-JY-sOi"/>
-        <segue reference="A72-VQ-NlC"/>
+        <segue reference="b7F-Ye-3BF"/>
     </inferredMetricsTieBreakers>
 </document>

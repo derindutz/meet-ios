@@ -13,6 +13,7 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
 
     // MARK: Public API
     
+    var oldMeeting: Meeting?
     var meeting: Meeting = Meeting() {
         didSet {
             updateUI()
@@ -23,6 +24,10 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let navcon = self.navigationController as? MeetingComposerNavigationController {
+            self.meeting = navcon.meeting
+            self.oldMeeting = self.meeting.copy()
+        }
         updateUI()
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 100.0
@@ -31,10 +36,17 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
     // MARK: Outlets
     
     @IBAction func cancelComposeMeeting(sender: UIBarButtonItem) {
+        if self.meeting == self.oldMeeting {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
         let alert = UIAlertController()
         
+        let destructiveTitle = self.meeting.status == .New ? "Delete Draft" : "Discard Changes"
+        let saveTitle = self.meeting.status == .New ? "Save Draft" : "Save Changes"
+        
         alert.addAction(UIAlertAction(
-            title: "Delete Draft",
+            title: destructiveTitle,
             style: .Destructive)
             { (action: UIAlertAction) -> Void in
                 self.dismissViewControllerAnimated(true, completion: nil)
@@ -42,10 +54,10 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
         )
         
         alert.addAction(UIAlertAction(
-            title: "Save Draft",
+            title: saveTitle,
             style: .Default)
             { (action: UIAlertAction) -> Void in
-                self.meeting.save()
+                self.meeting.saveAsDraft()
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
         )

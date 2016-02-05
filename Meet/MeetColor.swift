@@ -10,6 +10,8 @@ import UIKit
 
 public struct MeetColor {
     
+    // TODO: add ability to edit sent meetings
+    
     static let LightestBackground = UIColor(red: 238/255.0, green: 238/255.0, blue: 238/255.0, alpha: 1.0)
     static let LightBackground = UIColor(red: 210/255.0, green: 215/255.0, blue: 220/255.0, alpha: 1.0)
     static let DarkBackground = UIColor(red: 151/255.0, green: 151/255.0, blue: 151/255.0, alpha: 1.0)

@@ -46,6 +46,7 @@
 		9187EE9C1C0928EF00E43B30 /* AddressBookHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9187EE9B1C0928EF00E43B30 /* AddressBookHelper.swift */; };
 		919C97041C0BBF34004E54EF /* MeetingComposerSummarySendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919C97031C0BBF34004E54EF /* MeetingComposerSummarySendCell.swift */; };
 		919C97061C0BD3D4004E54EF /* MeetingDraftCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919C97051C0BD3D4004E54EF /* MeetingDraftCell.swift */; };
+		91C02F471C655FCB00532D3F /* MeetingComposerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C02F461C655FCB00532D3F /* MeetingComposerNavigationController.swift */; };
 		91C3900D1C02E0AA000E52C4 /* DashboardTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C3900C1C02E0AA000E52C4 /* DashboardTableViewController.swift */; };
 		91CAECCC1BFD938E00865DAD /* MeetTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CAECCB1BFD938E00865DAD /* MeetTableViewController.swift */; };
 		91CAECCE1BFD941500865DAD /* MeetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CAECCD1BFD941500865DAD /* MeetViewController.swift */; };
@@ -136,6 +137,7 @@
 		9187EE9B1C0928EF00E43B30 /* AddressBookHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressBookHelper.swift; sourceTree = "<group>"; };
 		919C97031C0BBF34004E54EF /* MeetingComposerSummarySendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MeetingComposerSummarySendCell.swift; path = Organizing/MeetingComposerSummarySendCell.swift; sourceTree = "<group>"; };
 		919C97051C0BD3D4004E54EF /* MeetingDraftCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MeetingDraftCell.swift; path = Organizing/MeetingDraftCell.swift; sourceTree = "<group>"; };
+		91C02F461C655FCB00532D3F /* MeetingComposerNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MeetingComposerNavigationController.swift; path = "Meeting Composer/MeetingComposerNavigationController.swift"; sourceTree = "<group>"; };
 		91C3900C1C02E0AA000E52C4 /* DashboardTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DashboardTableViewController.swift; path = Dashboard/DashboardTableViewController.swift; sourceTree = "<group>"; };
 		91CAECCB1BFD938E00865DAD /* MeetTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetTableViewController.swift; sourceTree = "<group>"; };
 		91CAECCD1BFD941500865DAD /* MeetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetViewController.swift; sourceTree = "<group>"; };
@@ -291,6 +293,14 @@
 			name = "Meeting Composer Information";
 			sourceTree = "<group>";
 		};
+		91C02F451C655F8800532D3F /* Meeting Composer */ = {
+			isa = PBXGroup;
+			children = (
+				91C02F461C655FCB00532D3F /* MeetingComposerNavigationController.swift */,
+			);
+			name = "Meeting Composer";
+			sourceTree = "<group>";
+		};
 		91C3900B1C02E08D000E52C4 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -325,6 +335,7 @@
 		91D25E3C1BF6C3F5004BFBF1 /* Meet */ = {
 			isa = PBXGroup;
 			children = (
+				91C02F451C655F8800532D3F /* Meeting Composer */,
 				91D25E411BF6C3F5004BFBF1 /* Main.storyboard */,
 				91468C381C0300030070DB86 /* MeetColor.swift */,
 				9187EE971C09201100E43B30 /* UserScrollView.swift */,
@@ -505,7 +516,7 @@
 				TargetAttributes = {
 					91D25E391BF6C3F5004BFBF1 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = U3PG6AF4JV;
+						DevelopmentTeam = 8YJ2342CPM;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 0;
@@ -627,6 +638,7 @@
 				91CE5F691C0B6AC0003A32D1 /* MeetingSectionNullStateCell.swift in Sources */,
 				916B7FE41BFC82C60031DFCE /* DatePickerViewController.swift in Sources */,
 				91FAED8E1C0F71C000B00619 /* TalkingPointSummaryTableViewController.swift in Sources */,
+				91C02F471C655FCB00532D3F /* MeetingComposerNavigationController.swift in Sources */,
 				9187EE981C09201100E43B30 /* UserScrollView.swift in Sources */,
 				911337D21BF93FFF0003EDE2 /* Meeting.swift in Sources */,
 				917AF2B31BFAF89A0054B7AE /* MeetingComposerSummaryAttendeesCell.swift in Sources */,

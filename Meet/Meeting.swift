@@ -11,12 +11,13 @@ import Foundation
 public class Meeting: CustomStringConvertible, Comparable {
 
     public enum Status: String {
-        case Unsent = "Unsent"
+        case New = "New"
+        case Draft = "Draft"
         case Sent = "Sent"
     }
     
     public var id: String?
-    public var status: Status = .Unsent
+    public var status: Status = .New
     public var host: String = CurrentUser.username
     public var title: String?
     public var startDate: NSDate?
@@ -70,8 +71,14 @@ public class Meeting: CustomStringConvertible, Comparable {
     
     public func send() -> Bool {
         if isReadyToSend() {
-            self.status = Status.Sent
-            MeetingDatabase.update(self)
+            switch self.status {
+            case .New:
+                self.status = Status.Sent
+                MeetingDatabase.create(self)
+            default:
+                self.status = Status.Sent
+                MeetingDatabase.update(self)
+            }
             return true
         }
         
@@ -79,15 +86,29 @@ public class Meeting: CustomStringConvertible, Comparable {
         return false
     }
     
-    public func save() -> Bool {
+    public func saveAsDraft() -> Bool {
         switch self.status {
-        case .Unsent:
+        case .New:
+            self.status = .Draft
+            MeetingDatabase.create(self)
+            return true
+        case .Draft:
             MeetingDatabase.update(self)
             return true
         default:
             return false
         }
     }
+
+//    public func save() -> Bool {
+//        switch self.status {
+//        case .Draft:
+//            MeetingDatabase.update(self)
+//            return true
+//        default:
+//            return false
+//        }
+//    }
     
     public func cancel() -> Bool {
         MeetingDatabase.cancel(self)
@@ -95,11 +116,15 @@ public class Meeting: CustomStringConvertible, Comparable {
     }
     
     public func deleteDraft() -> Bool {
-        if self.status == .Unsent {
+        switch self.status {
+        case .New:
+            return true
+        case .Draft:
             MeetingDatabase.deleteDraft(self)
             return true
+        default:
+            return false
         }
-        return false
     }
     
     public func respond() -> Bool {
@@ -126,8 +151,14 @@ public func < (lhs: Meeting, rhs: Meeting) -> Bool {
 }
 
 public func == (lhs: Meeting, rhs: Meeting) -> Bool {
-    if let lhsStart = lhs.startDate, rhsStart = rhs.startDate {
-        return lhsStart.compare(rhsStart) == .OrderedSame
-    }
-    return false
+    return lhs.id == rhs.id
+        && lhs.status == rhs.status
+        && lhs.host == rhs.host
+        && lhs.title == rhs.title
+        && lhs.startDate == rhs.startDate
+        && lhs.duration == rhs.duration
+        && lhs.attendees == rhs.attendees
+        && lhs.respondedYes == rhs.respondedYes
+        && lhs.respondedNo == rhs.respondedNo
+        && lhs.talkingPoints == rhs.talkingPoints
 }

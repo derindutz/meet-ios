@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class TalkingPoint: CustomStringConvertible {
+public class TalkingPoint: CustomStringConvertible, Equatable {
     public var text: String
     public var relevantUsers: [String] = [String]()
     
@@ -46,4 +46,9 @@ public class TalkingPoint: CustomStringConvertible {
 
         return storedString
     }
+}
+
+public func == (lhs: TalkingPoint, rhs: TalkingPoint) -> Bool {
+    return lhs.text == rhs.text
+        && lhs.relevantUsers == rhs.relevantUsers
 }

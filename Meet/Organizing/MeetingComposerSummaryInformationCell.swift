@@ -30,13 +30,17 @@ class MeetingComposerSummaryInformationCell: UITableViewCell, UITextFieldDelegat
     // MARK: GUI
     
     private func updateUI() {
+        self.meetingNameField.text = self.meeting.title
+        self.meetingDurationField.text = self.meeting.duration != nil ? "\(self.meeting.duration!)" : nil
+        self.meetingLocationField.text = self.meeting.location
+        updateDate()
+        
         self.meetingNameField.delegate = self
         self.meetingNameField.addTarget(self, action: "meetingNameDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         self.meetingDurationField.delegate = self
         self.meetingDurationField.addTarget(self, action: "meetingDurationDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         self.meetingLocationField.delegate = self
         self.meetingLocationField.addTarget(self, action: "meetingLocationDidChange:", forControlEvents: UIControlEvents.EditingChanged)
-        updateDate()
     }
     
     func meetingNameDidChange(textField: UITextField) {

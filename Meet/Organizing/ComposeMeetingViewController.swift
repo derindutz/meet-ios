@@ -76,7 +76,7 @@ class ComposeMeetingViewController: MeetViewController, UIPageViewControllerData
             title: "Save Draft",
             style: .Default)
             { (action: UIAlertAction) -> Void in
-                self.meeting.save()
+                self.meeting.saveAsDraft()
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
         )

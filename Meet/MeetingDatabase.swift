@@ -29,7 +29,7 @@ public class MeetingDatabase {
     
     public class func create(meeting: Meeting) {
         createInDatabase(meeting)
-        
+        createLocally(meeting)
         checkForAwaitingRespone()
     }
     
@@ -174,7 +174,7 @@ public class MeetingDatabase {
         
         let unsentQuery = PFQuery(className: "Meeting")
         unsentQuery.whereKey("host", equalTo: CurrentUser.username)
-        unsentQuery.whereKey("status", equalTo: "\(Meeting.Status.Unsent)")
+        unsentQuery.whereKey("status", equalTo: "\(Meeting.Status.Draft)")
         unsentQuery.orderByAscending("startDate")
         
         do {
@@ -266,6 +266,15 @@ public class MeetingDatabase {
     private class func createInDatabase(meeting: Meeting) {
         let pfMeeting = PFObject(className: "Meeting")
         pfMeeting["host"] = meeting.host
+        pfMeeting["status"] = "\(meeting.status)"
+        pfMeeting["title"] = meeting.title ?? NSNull()
+        pfMeeting["startDate"] = meeting.startDate ?? NSNull()
+        pfMeeting["duration"] = meeting.duration ?? NSNull()
+        pfMeeting["location"] = meeting.location ?? NSNull()
+        pfMeeting["attendees"] = meeting.attendees
+        pfMeeting["respondedYes"] = meeting.respondedYes
+        pfMeeting["respondedNo"] = meeting.respondedNo
+        pfMeeting["talkingPoints"] = meeting.talkingPoints.map(TalkingPoint.toStorageString)
         pfMeeting.saveInBackgroundWithBlock({
             (success, error) -> Void in
             if success {
@@ -275,6 +284,30 @@ public class MeetingDatabase {
             }
         })
         print("created meeting: \(meeting)")
+    }
+    
+    private class func createLocally(meeting: Meeting) {
+        var isMeetingFuture = false
+        if let start = meeting.startDate {
+            isMeetingFuture = start.compare(NSDate()) != NSComparisonResult.OrderedAscending
+            print("is meeting future? \(isMeetingFuture)")
+        }
+        
+        if isMeetingFuture && meeting.status == .Sent && meeting.attendees.contains(CurrentUser.username) {
+            if meeting.respondedYes.contains(CurrentUser.username) {
+                self.upcomingMeetings[1].append(meeting)
+            } else if !meeting.respondedNo.contains(CurrentUser.username) {
+                self.upcomingMeetings[0].append(meeting)
+            }
+        }
+        
+        if meeting.host == CurrentUser.username {
+            if meeting.status == .Draft {
+                self.organizingMeetings[0].append(meeting)
+            } else if isMeetingFuture {
+                self.organizingMeetings[1].append(meeting)
+            }
+        }
     }
     
     private class func updateLocally(meeting: Meeting) {
@@ -295,7 +328,7 @@ public class MeetingDatabase {
         }
         
         if meeting.host == CurrentUser.username {
-            if meeting.status == .Unsent {
+            if meeting.status == .Draft {
                 self.organizingMeetings[0].append(meeting)
             } else if isMeetingFuture {
                 self.organizingMeetings[1].append(meeting)
