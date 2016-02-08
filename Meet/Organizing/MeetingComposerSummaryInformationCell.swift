@@ -37,6 +37,7 @@ class MeetingComposerSummaryInformationCell: UITableViewCell, UITextFieldDelegat
         self.meetingDurationField.text = self.meeting.duration != nil ? "\(self.meeting.duration!)" : nil
         self.meetingLocationField.text = self.meeting.location
         
+        self.datePicker.backgroundColor = UIColor.whiteColor()
         self.datePicker.datePickerMode = .DateAndTime
         self.datePicker.minuteInterval = Constants.MinuteInterval
         if let startDate = self.meeting.startDate {
@@ -69,6 +70,9 @@ class MeetingComposerSummaryInformationCell: UITableViewCell, UITextFieldDelegat
     }
     
     func meetingTimeDidBeginEditing(textField: UITextField) {
+        let separatorView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 0.5))
+        separatorView.backgroundColor = MeetColor.DarkBackground
+        textField.inputAccessoryView = separatorView
         if textField.text == nil || textField.text == "" {
             let now = NSDate()
             let calendar = NSCalendar.currentCalendar()
@@ -114,6 +118,12 @@ class MeetingComposerSummaryInformationCell: UITableViewCell, UITextFieldDelegat
         if let delegate = self.delegate {
             delegate.updateNavigation()
         }
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        let separatorView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 0.5))
+        separatorView.backgroundColor = MeetColor.DarkBackground
+        textField.inputAccessoryView = separatorView
     }
     
     // MARK: Constants
