@@ -192,6 +192,10 @@ class OrganizingTableViewController: MeetTableViewController {
         }
         let headerCell = tableView.dequeueReusableCellWithIdentifier(Constants.HeaderCellIdentifier) as! MeetTableViewHeaderCell
         headerCell.title = headers[section]
+        
+        if section == 0 {
+            headerCell.showNotification = MeetingDatabase.isAwaitingResponse
+        }
         headerCell.contentView.backgroundColor = UIColor.whiteColor()
         return headerCell.contentView
     }
