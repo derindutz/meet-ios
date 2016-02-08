@@ -90,6 +90,7 @@ class OrganizingTableViewController: MeetTableViewController {
     }
     
     @IBAction func newMeetingComposed(segue: UIStoryboardSegue) {
+        //print("creating new meeting!")
         setupMeetings()
     }
     

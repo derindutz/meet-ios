@@ -23,7 +23,7 @@ class MeetingComposerSummaryInformationCell: UITableViewCell, UITextFieldDelegat
     // MARK: Outlets
     
     @IBOutlet weak var meetingNameField: UITextField!
-    @IBOutlet weak var meetingTimeButton: UIButton!
+    @IBOutlet weak var meetingTimeField: UITextField!
     @IBOutlet weak var meetingDurationField: UITextField!
     @IBOutlet weak var meetingLocationField: UITextField!
     
@@ -31,9 +31,14 @@ class MeetingComposerSummaryInformationCell: UITableViewCell, UITextFieldDelegat
     
     private func updateUI() {
         self.meetingNameField.text = self.meeting.title
+        self.meetingTimeField.text = DateHelper.getDateEntryString(self.meeting.startDate)
         self.meetingDurationField.text = self.meeting.duration != nil ? "\(self.meeting.duration!)" : nil
         self.meetingLocationField.text = self.meeting.location
-        updateDate()
+        
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .DateAndTime
+        datePicker.addTarget(self, action: "meetingTimeDidChange:", forControlEvents: .ValueChanged)
+        self.meetingTimeField.inputView = datePicker
         
         self.meetingNameField.delegate = self
         self.meetingNameField.addTarget(self, action: "meetingNameDidChange:", forControlEvents: UIControlEvents.EditingChanged)
@@ -49,6 +54,14 @@ class MeetingComposerSummaryInformationCell: UITableViewCell, UITextFieldDelegat
             text = nil
         }
         self.meeting.title = text
+        if let delegate = self.delegate {
+            delegate.updateNavigation()
+        }
+    }
+    
+    func meetingTimeDidChange(datePicker: UIDatePicker) {
+        self.meetingTimeField.text = DateHelper.getDateEntryString(datePicker.date)
+        self.meeting.startDate = datePicker.date
         if let delegate = self.delegate {
             delegate.updateNavigation()
         }
@@ -77,15 +90,6 @@ class MeetingComposerSummaryInformationCell: UITableViewCell, UITextFieldDelegat
         self.meeting.location = text
         if let delegate = self.delegate {
             delegate.updateNavigation()
-        }
-    }
-    
-    private func updateDate() {
-        print("updating date...")
-        if let timeButton = self.meetingTimeButton, startDate = self.meeting.startDate {
-            print("to...\(startDate)")
-            timeButton.setTitle(DateHelper.getDateEntryString(startDate), forState: .Normal)
-            timeButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
         }
     }
 }

@@ -35,6 +35,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarAppearance.backgroundImage = UIImage()
         tabBarAppearance.shadowImage = getImageWithColor(MeetColor.DarkBackground, size: CGSize(width: 1, height: 1))
         
+        // Add to allow for push notifications
+        let userNotificationTypes: UIUserNotificationType = [.Alert, .Badge, .Sound]
+        let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
+        application.registerUserNotificationSettings(settings)
+        application.registerForRemoteNotifications()
+        
         // Override point for customization after application launch.
         return true
     }
@@ -75,6 +81,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         print("terminating")
         Account.logout()
+    }
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        // Store the deviceToken in the current Installation and save it to Parse
+        let installation = PFInstallation.currentInstallation()
+        installation.setDeviceTokenFromData(deviceToken)
+        installation.saveInBackground()
     }
 
 

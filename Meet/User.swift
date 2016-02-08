@@ -26,16 +26,25 @@ public class User: CustomStringConvertible {
         set {
             if let fullName = newValue {
                 let fullNameArr = fullName.componentsSeparatedByString(" ")
-                firstName = fullNameArr[0]
-                lastName = fullNameArr[1]
+                if (fullNameArr.count == 2) {
+                    firstName = fullNameArr[0]
+                    lastName = fullNameArr[1]
+                } else {
+                    firstName = fullName
+                    lastName = fullName
+                }
+                
             }
         }
     }
     
     public var firstNameLastInitial: String? {
         get {
-            if let first = firstName, last = lastName {
-                return "\(first) \(last[last.startIndex])."
+            if (lastName?.isEmpty == false) {
+                if let first = firstName, last = lastName {
+                    return "\(first) \(last[last.startIndex])."
+                }
+                
             }
             return nil
         }
@@ -64,5 +73,5 @@ public class User: CustomStringConvertible {
         return nil
     }
     
-    public var description: String { return "\(firstName) \(lastName) (\(username))" }
+    public var description: String { return "(\(username))" }
 }
