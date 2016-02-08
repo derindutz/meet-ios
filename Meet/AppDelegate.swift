@@ -24,11 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.setApplicationId("UtFM8kanKlQPPPjcFLuRpBTiR2758EXc5XH7qX8N",
             clientKey: "xZd3XnO1EqChkNMaoLMt1bZfg3VrMcQykr3ZdRv0")
         
-        let pageControl = UIPageControl.appearance()
-        pageControl.pageIndicatorTintColor = MeetColor.LightestBackground
-        pageControl.currentPageIndicatorTintColor = MeetColor.LightHighlight
-        pageControl.backgroundColor = UIColor.whiteColor()
-        
         let tabBarAppearance = UITabBar.appearance()
         tabBarAppearance.barTintColor = UIColor.whiteColor()
         tabBarAppearance.translucent = false

@@ -32,7 +32,6 @@ class LoginViewController: MeetViewController, UITextFieldDelegate {
         activityIndicator.hidden = true
         activityIndicator.center = self.view.center
         
-        
         nameTextField.delegate = self
         nameTextField.becomeFirstResponder()
     }
@@ -47,10 +46,6 @@ class LoginViewController: MeetViewController, UITextFieldDelegate {
     
     func getHints(timer: NSTimer) {
         updateUser()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        attemptLoginWithKeychain()
     }
     
     // MARK: Text Field Delegate
@@ -114,27 +109,20 @@ class LoginViewController: MeetViewController, UITextFieldDelegate {
     // MARK: Login
     
     private func attemptLoginWithKeychain() {
-        if Account.loginWithKeychain() {
-            print("Logged in with keychain.")
-            performLogin()
-        } else {
-            if let user = self.user, username = user.username {
-                if Account.login(username, password: "password") {
-                    print("Logged in with password.")
-                    performLogin()
-                } else {
-                    createNewAccount(username, password: "password")
-                    CurrentUser.username = username
-                    performLogin()
-                }
+        activityIndicator.hidden = false
+        activityIndicator.startAnimating()
+        if let user = self.user, username = user.username {
+            if Account.login(username, password: "password") {
+                performLogin()
+            } else {
+                createNewAccount(username, password: "password")
+                CurrentUser.username = username
+                performLogin()
             }
         }
     }
     
     private func performLogin() {
-        print("performing login...")
-        activityIndicator.hidden = false
-        activityIndicator.startAnimating()
         MeetingDatabase.loadMeetings()
         performSegueWithIdentifier(Constants.SegueLogin, sender: self)
     }

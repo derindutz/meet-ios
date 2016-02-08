@@ -38,6 +38,7 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
     @IBAction func cancelComposeMeeting(sender: UIBarButtonItem) {
         if self.meeting == self.oldMeeting {
             self.dismissViewControllerAnimated(true, completion: nil)
+            return
         }
         
         let alert = UIAlertController()

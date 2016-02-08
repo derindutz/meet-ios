@@ -22,6 +22,7 @@
 		91468C3B1C030D360070DB86 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91468C3A1C030D360070DB86 /* CurrentUser.swift */; };
 		914CF35C1C0656B000679C61 /* ArcView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914CF35B1C0656B000679C61 /* ArcView.swift */; };
 		914CF35F1C068D0D00679C61 /* LineGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914CF35E1C068D0D00679C61 /* LineGraphView.swift */; };
+		915AC0011C6836B0007622AE /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915AC0001C6836B0007622AE /* LoadingViewController.swift */; };
 		916B7FDE1BFBEA950031DFCE /* MeetNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916B7FDD1BFBEA950031DFCE /* MeetNavigationController.swift */; };
 		916B7FE01BFC35C20031DFCE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916B7FDF1BFC35C20031DFCE /* User.swift */; };
 		916B7FE21BFC410A0031DFCE /* UserDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916B7FE11BFC410A0031DFCE /* UserDatabase.swift */; };
@@ -113,6 +114,7 @@
 		91468C3A1C030D360070DB86 /* CurrentUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
 		914CF35B1C0656B000679C61 /* ArcView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArcView.swift; path = "Custom Views/ArcView.swift"; sourceTree = "<group>"; };
 		914CF35E1C068D0D00679C61 /* LineGraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LineGraphView.swift; path = "Custom Views/LineGraphView.swift"; sourceTree = "<group>"; };
+		915AC0001C6836B0007622AE /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingViewController.swift; path = Login/LoadingViewController.swift; sourceTree = "<group>"; };
 		916B7FDD1BFBEA950031DFCE /* MeetNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetNavigationController.swift; sourceTree = "<group>"; };
 		916B7FDF1BFC35C20031DFCE /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		916B7FE11BFC410A0031DFCE /* UserDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDatabase.swift; sourceTree = "<group>"; };
@@ -407,6 +409,7 @@
 			children = (
 				91DD30CB1BF6C92A00EF5C06 /* Account.swift */,
 				91EE1CF21BF6D6F300E61AFB /* LoginViewController.swift */,
+				915AC0001C6836B0007622AE /* LoadingViewController.swift */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -685,6 +688,7 @@
 				917AF2AB1BFA59C70054B7AE /* MeetingComposerSummaryTableViewController.swift in Sources */,
 				916B7FE01BFC35C20031DFCE /* User.swift in Sources */,
 				91468C3B1C030D360070DB86 /* CurrentUser.swift in Sources */,
+				915AC0011C6836B0007622AE /* LoadingViewController.swift in Sources */,
 				91CAECD21BFDBE9100865DAD /* ComposeMeetingViewController.swift in Sources */,
 				919C97041C0BBF34004E54EF /* MeetingComposerSummarySendCell.swift in Sources */,
 			);
