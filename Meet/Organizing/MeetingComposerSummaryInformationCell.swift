@@ -20,6 +20,8 @@ class MeetingComposerSummaryInformationCell: UITableViewCell, UITextFieldDelegat
         }
     }
     
+    var datePicker = UIDatePicker()
+    
     // MARK: Outlets
     
     @IBOutlet weak var meetingNameField: UITextField!
@@ -35,8 +37,13 @@ class MeetingComposerSummaryInformationCell: UITableViewCell, UITextFieldDelegat
         self.meetingDurationField.text = self.meeting.duration != nil ? "\(self.meeting.duration!)" : nil
         self.meetingLocationField.text = self.meeting.location
         
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .DateAndTime
+        self.datePicker.datePickerMode = .DateAndTime
+        self.datePicker.minuteInterval = Constants.MinuteInterval
+        if let startDate = self.meeting.startDate {
+            self.datePicker.date = startDate
+        }
+        self.datePicker.minimumDate = NSDate()
+        self.meetingTimeField.addTarget(self, action: "meetingTimeDidBeginEditing:", forControlEvents: .EditingDidBegin)
         datePicker.addTarget(self, action: "meetingTimeDidChange:", forControlEvents: .ValueChanged)
         self.meetingTimeField.inputView = datePicker
         
@@ -48,6 +55,8 @@ class MeetingComposerSummaryInformationCell: UITableViewCell, UITextFieldDelegat
         self.meetingLocationField.addTarget(self, action: "meetingLocationDidChange:", forControlEvents: UIControlEvents.EditingChanged)
     }
     
+    
+    
     func meetingNameDidChange(textField: UITextField) {
         var text = textField.text
         if text == "" {
@@ -56,6 +65,20 @@ class MeetingComposerSummaryInformationCell: UITableViewCell, UITextFieldDelegat
         self.meeting.title = text
         if let delegate = self.delegate {
             delegate.updateNavigation()
+        }
+    }
+    
+    func meetingTimeDidBeginEditing(textField: UITextField) {
+        if textField.text == nil || textField.text == "" {
+            let now = NSDate()
+            let calendar = NSCalendar.currentCalendar()
+            let currentMinute = calendar.component(.Minute, fromDate: now)
+            let remainder = currentMinute % Constants.MinuteInterval
+            if let date = calendar.dateByAddingUnit(.Minute, value: Constants.MinuteInterval - remainder, toDate: now, options: NSCalendarOptions()) {
+                textField.text = DateHelper.getDateEntryString(date)
+                self.meeting.startDate = date
+                self.datePicker.minimumDate = date
+            }
         }
     }
     
@@ -92,4 +115,11 @@ class MeetingComposerSummaryInformationCell: UITableViewCell, UITextFieldDelegat
             delegate.updateNavigation()
         }
     }
+    
+    // MARK: Constants
+    
+    private struct Constants {
+        static let MinuteInterval = 15
+    }
+
 }

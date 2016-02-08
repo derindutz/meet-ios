@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Parse
+
 
 class OrganizingTableViewController: MeetTableViewController {
     
@@ -90,7 +92,13 @@ class OrganizingTableViewController: MeetTableViewController {
     }
     
     @IBAction func newMeetingComposed(segue: UIStoryboardSegue) {
-        //print("creating new meeting!")
+        print("creating new meeting!")
+        
+        // Associate the device with a user
+        let installation = PFInstallation.currentInstallation()
+        installation["user"] = PFUser.currentUser()
+        installation.saveInBackground()
+        
         setupMeetings()
     }
     
