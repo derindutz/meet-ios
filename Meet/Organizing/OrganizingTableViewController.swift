@@ -94,10 +94,25 @@ class OrganizingTableViewController: MeetTableViewController {
     @IBAction func newMeetingComposed(segue: UIStoryboardSegue) {
         print("creating new meeting!")
         
-        // Associate the device with a user
-        let installation = PFInstallation.currentInstallation()
-        installation["user"] = PFUser.currentUser()
-        installation.saveInBackground()
+//        // Associate the device with a user
+        let currentInstallation = PFInstallation.currentInstallation()
+        currentInstallation.addUniqueObject("Giants", forKey: "channels")
+        currentInstallation.saveInBackground()
+        
+        let push = PFPush()
+        push.setChannel("Giants")
+        push.setMessage("CAN THIS PUSH PLEASE SHOW?!")
+        
+        push.sendPushInBackgroundWithBlock {
+            (success: Bool , error: NSError?) -> Void in
+            if (success) {
+                print("The push campaign has been created.");
+            } else if (error!.code == 112) {
+                print("Could not send push. Push is misconfigured: \(error!.description).");
+            } else {
+                print("Error sending push: \(error!.description).");
+            }
+        }
         
         setupMeetings()
     }
