@@ -91,10 +91,11 @@ class OrganizingTableViewController: MeetTableViewController {
         }
     }
     
+    
     @IBAction func newMeetingComposed(segue: UIStoryboardSegue) {
         print("creating new meeting!")
         
-//        // Associate the device with a user
+        // Associate the device with a user
         let currentInstallation = PFInstallation.currentInstallation()
         currentInstallation.addUniqueObject("Giants", forKey: "channels")
         currentInstallation.saveInBackground()

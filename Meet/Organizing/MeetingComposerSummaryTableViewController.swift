@@ -10,6 +10,7 @@ import UIKit
 import ContactsUI
 
 class MeetingComposerSummaryTableViewController: MeetingComposerTableViewController, CNContactPickerDelegate {
+    
 
     // MARK: Public API
     
@@ -74,6 +75,14 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
         presentViewController(alert, animated: true, completion: nil)
     }
     
+    @IBAction func attendeesAdded(segue: UIStoryboardSegue) {
+        tableView.reloadData()
+    }
+    
+    @IBAction func cancelAddAttendees(segue: UIStoryboardSegue) {
+        // Empty.
+    }
+    
     @IBAction func newTalkingPointComposed(segue: UIStoryboardSegue) {
         updateUI()
     }
@@ -100,6 +109,7 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
         static let MeetingComposerSummaryAttendeesCellIdentifier = "MeetingComposerSummaryAttendeesCell"
         static let MeetingComposerSummaryNewTalkingPointCellIdentifier = "NewTalkingPointCell"
         static let MeetingComposerSummaryTalkingPointCellIdentifier = "TalkingPointCell"
+        static let AttendeePickerNavigationControllerIdentifier = "AttendeePickerNavigationControllerIdentifier"
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
@@ -191,9 +201,13 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
     }
     
     func addUser(sender: UIButton!) {
-        let contactPickerViewController = CNContactPickerViewController()
-        contactPickerViewController.delegate = self
-        presentViewController(contactPickerViewController, animated: true, completion: nil)
+        let attendeePickerNavCon = self.storyboard?.instantiateViewControllerWithIdentifier(Storyboard.AttendeePickerNavigationControllerIdentifier) as! AttendeePickerNavigationController
+        attendeePickerNavCon.attendees = self.meeting.attendees
+        self.navigationController?.presentViewController(attendeePickerNavCon, animated: true, completion: nil)
+        // TODO: REMOVE
+//        let contactPickerViewController = CNContactPickerViewController()
+//        contactPickerViewController.delegate = self
+//        presentViewController(contactPickerViewController, animated: true, completion: nil)
     }
     
     // MARK: CNContactPicker Delegate

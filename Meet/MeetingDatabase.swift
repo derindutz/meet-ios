@@ -118,7 +118,6 @@ public class MeetingDatabase {
             var isAwaitingResponse = false
             for pfMeeting in results {
                 let meeting = getMeetingFromPFObject(pfMeeting)
-                print(meeting)
                 if meeting.respondedYes.contains(CurrentUser.username) {
                     meetings[1].append(meeting)
                 } else if !meeting.respondedNo.contains(CurrentUser.username) {

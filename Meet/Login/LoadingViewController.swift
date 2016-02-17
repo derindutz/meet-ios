@@ -23,6 +23,8 @@ class LoadingViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        UserDatabase.load()
+        AddressBookHelper.getUsers()
         if Account.loginWithKeychain() {
             MeetingDatabase.loadMeetings()
             performSegueWithIdentifier(Constants.SegueDashboard, sender: self)

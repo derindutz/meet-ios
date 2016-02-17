@@ -24,6 +24,9 @@ class DashboardStatisticsTableViewCell: UITableViewCell, LineGraphViewDataSource
     
     // MARK: Outlets
     
+    
+    @IBOutlet weak var hackyDashboardImage: UIImageView!
+    
     @IBOutlet weak var currentPeriodLabel: UILabel!
     @IBOutlet weak var timeInCurrentPeriodLabel: UILabel!
     
@@ -38,7 +41,7 @@ class DashboardStatisticsTableViewCell: UITableViewCell, LineGraphViewDataSource
     
     @IBOutlet weak var lineGraphView: LineGraphView! {
         didSet {
-            lineGraphView.dataSource = self
+            //lineGraphView.dataSource = self
         }
     }
     
@@ -115,7 +118,28 @@ class DashboardStatisticsTableViewCell: UITableViewCell, LineGraphViewDataSource
         }
     }
     
+//    @IBOutlet weak var currentPeriodLabel: UILabel!
+//    @IBOutlet weak var timeInCurrentPeriodLabel: UILabel!
+//    
+//    // These temporarily represent the dollars saved
+//    @IBOutlet weak var timeInPrevPeriodLabel: UILabel!
+//    @IBOutlet weak var prevLabel: UILabel!
+//    private var previousTimeArcView: ArcView?
+    
     private func updateData() {
+//        self.percentDifferenceLabel.hidden = true
+//        self.percentSignLabel.hidden = true
+//        self.percentDifferenceTriangleImageView.hidden = true
+//        self.currentPeriodLabel.hidden = true
+//        self.timeInCurrentPeriodLabel.hidden = true
+//        self.timeInPrevPeriodLabel.hidden = true
+//        self.prevLabel.hidden = true
+        
+        self.previousSum = nil
+        self.timeInPrevPeriodLabel.hidden = true
+        self.prevLabel.hidden = true
+        //updateArcView()
+        
         self.percentDifferenceLabel.hidden = true
         self.percentSignLabel.hidden = true
         self.percentDifferenceTriangleImageView.hidden = true
@@ -127,40 +151,41 @@ class DashboardStatisticsTableViewCell: UITableViewCell, LineGraphViewDataSource
         
         self.currentSum = ceil(Double(slice.reduce(0, combine: +)) / 60.0)
         let sum = self.currentSum!
-        self.timeInCurrentPeriodLabel.text = String.localizedStringWithFormat("%.0f", sum)
+        //self.timeInCurrentPeriodLabel.text = String.localizedStringWithFormat("%.0f", sum)
+        self.timeInCurrentPeriodLabel.text = ""
         
-        if (numDaysInCurrentPeriod * 2 <= allTimeSpentArray.count) {
-            let prevSlice = allTimeSpentArray[(allTimeSpentArray.count - numDaysInCurrentPeriod * 2)..<(allTimeSpentArray.count - numDaysInCurrentPeriod)]
-            self.previousSum = ceil(Double(prevSlice.reduce(0, combine: +)) / 60.0)
-            let prevSum = self.previousSum!
-            
-            self.timeInPrevPeriodLabel.text = String.localizedStringWithFormat("%.0f", prevSum)
-            self.timeInPrevPeriodLabel.hidden = false
-            self.prevLabel.hidden = false
-            updateArcView()
-            
-            if sum < prevSum {
-                let percentDifference = Int(round(((prevSum / sum) - 1.0) * 100))
-                self.percentDifferenceLabel.text = "\(percentDifference)"
-                self.percentDifferenceTriangleImageView.image = UIImage(named: "triangle_down")
-            } else {
-                let percentDifference = Int(round(((sum / prevSum) - 1.0) * 100))
-                self.percentDifferenceLabel.text = "\(percentDifference)"
-                self.percentDifferenceTriangleImageView.image = UIImage(named: "triangle_up")
-            }
-            self.percentDifferenceLabel.hidden = false
-            self.percentSignLabel.hidden = false
-            self.percentDifferenceTriangleImageView.hidden = false
-        } else {
-            self.previousSum = nil
-            self.timeInPrevPeriodLabel.hidden = true
-            self.prevLabel.hidden = true
-            updateArcView()
-            
-            self.percentDifferenceLabel.hidden = true
-            self.percentSignLabel.hidden = true
-            self.percentDifferenceTriangleImageView.hidden = true
-        }
+//        if (numDaysInCurrentPeriod * 2 <= allTimeSpentArray.count) {
+//            let prevSlice = allTimeSpentArray[(allTimeSpentArray.count - numDaysInCurrentPeriod * 2)..<(allTimeSpentArray.count - numDaysInCurrentPeriod)]
+//            self.previousSum = ceil(Double(prevSlice.reduce(0, combine: +)) / 60.0)
+//            let prevSum = self.previousSum!
+//            
+//            self.timeInPrevPeriodLabel.text = String.localizedStringWithFormat("%.0f", prevSum)
+//            self.timeInPrevPeriodLabel.hidden = false
+//            self.prevLabel.hidden = false
+//            //updateArcView()
+//            
+//            if sum < prevSum {
+//                let percentDifference = Int(round(((prevSum / sum) - 1.0) * 100))
+//                self.percentDifferenceLabel.text = "\(percentDifference)"
+//                self.percentDifferenceTriangleImageView.image = UIImage(named: "triangle_down")
+//            } else {
+//                let percentDifference = Int(round(((sum / prevSum) - 1.0) * 100))
+//                self.percentDifferenceLabel.text = "\(percentDifference)"
+//                self.percentDifferenceTriangleImageView.image = UIImage(named: "triangle_up")
+//            }
+//            self.percentDifferenceLabel.hidden = false
+//            self.percentSignLabel.hidden = false
+//            self.percentDifferenceTriangleImageView.hidden = false
+//        } else {
+//            self.previousSum = nil
+//            self.timeInPrevPeriodLabel.hidden = true
+//            self.prevLabel.hidden = true
+//            //updateArcView()
+//            
+//            self.percentDifferenceLabel.hidden = true
+//            self.percentSignLabel.hidden = true
+//            self.percentDifferenceTriangleImageView.hidden = true
+//        }
         
         if let maxVal = slice.maxElement() {
             lineGraphView.maxYValue = CGFloat(maxVal)
@@ -196,16 +221,22 @@ class DashboardStatisticsTableViewCell: UITableViewCell, LineGraphViewDataSource
     private func updateUI() {
         switch self.period {
         case .Week:
+            print("WEEK")
+            hackyDashboardImage.image = UIImage(named: "ThisWeek")
             self.currentPeriodLabel.text = "last 7 days"
             self.changePeriodWeekButton.setTitleColor(Constants.SelectedButtonColor, forState: .Normal)
             self.changePeriodMonthButton.setTitleColor(Constants.DeselectedButtonColor, forState: .Normal)
             self.changePeriodAllButton.setTitleColor(Constants.DeselectedButtonColor, forState: .Normal)
         case .Month:
+            print("MONTH")
+            hackyDashboardImage.image = UIImage(named: "ThisMonth")
             self.currentPeriodLabel.text = "last 30 days"
             self.changePeriodWeekButton.setTitleColor(Constants.DeselectedButtonColor, forState: .Normal)
             self.changePeriodMonthButton.setTitleColor(Constants.SelectedButtonColor, forState: .Normal)
             self.changePeriodAllButton.setTitleColor(Constants.DeselectedButtonColor, forState: .Normal)
         case .All:
+            print("ALL TIME")
+            hackyDashboardImage.image = UIImage(named: "ThisYear")
             self.currentPeriodLabel.text = "all time"
             self.changePeriodWeekButton.setTitleColor(Constants.DeselectedButtonColor, forState: .Normal)
             self.changePeriodMonthButton.setTitleColor(Constants.DeselectedButtonColor, forState: .Normal)

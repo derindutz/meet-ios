@@ -9,12 +9,14 @@
 import UIKit
 
 public class User: CustomStringConvertible {
+    public var id: String?
     public var username: String?
     public var firstName: String?
     public var lastName: String?
+    public var emails = [String]()
+    public var phoneNumbers = [String]()
     public var profileImageData: NSData?
-    
-    public var contactIdentifier: String?
+    public var isRegistered = false
     
     public var fullName: String? {
         get {
@@ -52,14 +54,34 @@ public class User: CustomStringConvertible {
     
     public var initials: String? {
         get {
-            if let first = firstName, last = lastName {
-                if !first.isEmpty && !last.isEmpty {
-                    return "\(first[first.startIndex])\(last[last.startIndex])"
-                }
+            if let first = self.firstInitial, last = self.lastInitial {
+                return "\(first)\(last)"
+            } else if let first = self.firstInitial {
+                return "\(first)"
+            } else if let last = self.lastInitial {
+                return "\(last)"
+            } else {
+                return nil
             }
-            if let first = firstName {
+        }
+    }
+    
+    public var firstInitial: String? {
+        get {
+            if let first = self.firstName {
                 if !first.isEmpty {
                     return "\(first[first.startIndex])"
+                }
+            }
+            return nil
+        }
+    }
+    
+    public var lastInitial: String? {
+        get {
+            if let last = self.lastName {
+                if !last.isEmpty {
+                    return "\(last[last.startIndex])"
                 }
             }
             return nil
@@ -73,5 +95,30 @@ public class User: CustomStringConvertible {
         return nil
     }
     
-    public var description: String { return "(\(username))" }
+    public class func union(primaryUser: User, secondaryUser: User) -> User {
+        let newUser = primaryUser
+        if newUser.username == nil {
+            newUser.username = secondaryUser.username
+        }
+        if newUser.firstName == nil {
+            newUser.firstName = secondaryUser.firstName
+        }
+        if newUser.lastName == nil {
+            newUser.lastName = secondaryUser.lastName
+        }
+        
+        newUser.emails.appendContentsOf(secondaryUser.emails)
+
+        newUser.phoneNumbers.appendContentsOf(secondaryUser.phoneNumbers)
+        
+        if newUser.profileImageData == nil {
+            newUser.profileImageData = secondaryUser.profileImageData
+        }
+        
+        newUser.isRegistered = newUser.isRegistered || secondaryUser.isRegistered
+        
+        return newUser
+    }
+    
+    public var description: String { return "(\(username) \(firstName) \(lastName), \(emails), \(phoneNumbers), \(isRegistered))" }
 }

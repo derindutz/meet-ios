@@ -70,7 +70,8 @@ class LoginViewController: MeetViewController, UITextFieldDelegate {
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         if identifier == Constants.SegueLogin {
-            return Account.isLoggedIn()
+            //return Account.isLoggedIn()
+            return true
         }
         return true
     }
@@ -88,8 +89,8 @@ class LoginViewController: MeetViewController, UITextFieldDelegate {
     }
     
     private func updateUser() {
-        if let name = nameTextField.text {
-            self.user = AddressBookHelper.getUserByName(name)
+        if let username = nameTextField.text {
+            self.user = UserDatabase.getUser(username)
         } else {
             self.user = nil
         }
@@ -102,6 +103,7 @@ class LoginViewController: MeetViewController, UITextFieldDelegate {
         if self.user != nil {
             attemptLoginWithKeychain()
         } else {
+            print("invalid login...")
             AddressBookHelper.showMessage("No contacts were found matching the given name.")
         }
     }
@@ -115,7 +117,7 @@ class LoginViewController: MeetViewController, UITextFieldDelegate {
             if Account.login(username, password: "password") {
                 performLogin()
             } else {
-                createNewAccount(username, password: "password")
+                Account.signUp(username, password: "password")
                 CurrentUser.username = username
                 performLogin()
             }
@@ -125,19 +127,6 @@ class LoginViewController: MeetViewController, UITextFieldDelegate {
     private func performLogin() {
         MeetingDatabase.loadMeetings()
         performSegueWithIdentifier(Constants.SegueLogin, sender: self)
-    }
-    
-    private func createNewAccount(username: String, password: String) {
-        let newUser = PFUser()
-        newUser.username = username
-        newUser.password = password
-        do {
-            try newUser.signUp()
-            Account.login(username, password: password)
-            print("Created new account (\(username),\(password))")
-        } catch _ {
-            print("Unable to sign up new user (\(username),\(password))")
-        }
     }
 }
 

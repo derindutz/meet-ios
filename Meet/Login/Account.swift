@@ -23,6 +23,7 @@ public class Account {
     - returns: Returns true on login success, false otherwise.
     */
     public class func login(username: String, password: String) -> Bool {
+        let username = username.lowercaseString
         CurrentUser.username = username
         let login = try? PFUser.logInWithUsername(username, password: password)
         if login != nil {
@@ -36,6 +37,24 @@ public class Account {
         return false
     }
     
+    public class func signUp(username: String, password: String) {
+        let username = username.lowercaseString
+        let newUser = PFUser()
+        newUser.username = username
+        newUser.password = password
+        do {
+            try newUser.signUp()
+            let registeredUser = User()
+            registeredUser.username = username
+            registeredUser.isRegistered = true
+            UserDatabase.updateUser(username, user: registeredUser)
+            UserDatabase.saveUserToDatabase(username, user: UserDatabase.getUser(username)!)
+            Account.login(username, password: password)
+        } catch _ {
+            print("Unable to sign up new user (\(username),\(password))")
+        }
+    }
+    
     /**
      Attempts to used previously saved keychain values to login.
      
@@ -44,7 +63,7 @@ public class Account {
     public class func loginWithKeychain() -> Bool {
         let dictionary = Locksmith.loadDataForUserAccount(Constants.UserAccount)
         if let userData = dictionary as? [String: String] {
-            if let username = userData["username"], password = userData["password"] {
+            if let username = userData["username"]?.lowercaseString, password = userData["password"] {
                 do {
                     try PFUser.logInWithUsername(username, password: password)
                     CurrentUser.username = username

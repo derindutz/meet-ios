@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="GBT-3n-V0o">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="FLt-UK-1hn">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -94,6 +94,7 @@
                             </mask>
                         </variation>
                     </view>
+                    <navigationItem key="navigationItem" id="8so-oz-pw4"/>
                     <connections>
                         <outlet property="loadingIndicator" destination="dEA-yd-hyU" id="vLR-5W-AcQ"/>
                         <segue destination="eM4-7V-4eH" kind="presentation" identifier="SegueDashboard" id="ehk-gW-Og7"/>
@@ -102,7 +103,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iHp-dv-Jjy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1242" y="409.5"/>
+            <point key="canvasLocation" x="-324" y="409.5"/>
         </scene>
         <!--Meet Navigation Controller-->
         <scene sceneID="SLv-QB-W3m">
@@ -119,7 +120,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nxs-jL-t5x" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-399" y="410"/>
+            <point key="canvasLocation" x="519" y="409.5"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="LWg-24-5Ue">
@@ -133,7 +134,7 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="your name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iQt-oB-I43">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iQt-oB-I43">
                                 <rect key="frame" x="20" y="124" width="560" height="24"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
@@ -281,7 +282,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qo7-WA-cCp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="489" y="410"/>
+            <point key="canvasLocation" x="1407" y="409.5"/>
         </scene>
         <!--Dashboard Table View Controller-->
         <scene sceneID="KNG-GB-kUE">
@@ -450,6 +451,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <imageView userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ThisWeek" translatesAutoresizingMaskIntoConstraints="NO" id="Od4-ov-ATg">
+                                            <rect key="frame" x="0.0" y="-8" width="376" height="368"/>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="Z5H-XU-99j" firstAttribute="top" secondItem="Eop-YI-tE2" secondAttribute="bottom" constant="30" id="6hA-Em-X1Q">
@@ -637,6 +641,7 @@
                                     <outlet property="changePeriodMonthButton" destination="VVz-cd-fTM" id="8uW-24-W0b"/>
                                     <outlet property="changePeriodWeekButton" destination="p4Q-1T-Iol" id="hXv-Re-y0l"/>
                                     <outlet property="currentPeriodLabel" destination="2Lv-dW-rmA" id="b55-rq-Ry6"/>
+                                    <outlet property="hackyDashboardImage" destination="Od4-ov-ATg" id="umi-x7-LW1"/>
                                     <outlet property="lineGraphView" destination="Z5H-XU-99j" id="oJW-Jl-fZU"/>
                                     <outlet property="percentDifferenceLabel" destination="NVs-CG-Gbf" id="D3Z-HJ-xIq"/>
                                     <outlet property="percentDifferenceTriangleImageView" destination="JnT-QU-hEc" id="VQa-Px-Ptf"/>
@@ -899,7 +904,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kcO-lr-B5U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2922" y="-273"/>
+            <point key="canvasLocation" x="3885" y="-119.25"/>
         </scene>
         <!--Organizing Table View Controller-->
         <scene sceneID="M5F-cI-NsE">
@@ -1224,7 +1229,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pa3-yM-zPW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2958" y="867.75"/>
+            <point key="canvasLocation" x="3876" y="867.75"/>
         </scene>
         <!--Compose Meeting View Controller-->
         <scene sceneID="GoZ-nI-89c">
@@ -2833,6 +2838,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Send" id="MFF-v1-JEM">
                             <connections>
+                                <action selector="onSend:" destination="dSf-Sq-uZj" id="Jtk-rF-TT0"/>
                                 <segue destination="gSw-v1-IMY" kind="unwind" identifier="UnwindNewMeetingComposed" unwindAction="newMeetingComposed:" id="oPw-i3-Lrk"/>
                             </connections>
                         </barButtonItem>
@@ -2842,6 +2848,160 @@
                 <exit id="gSw-v1-IMY" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3876" y="1828.5"/>
+        </scene>
+        <!--Attendee Picker Table View Controller-->
+        <scene sceneID="4m0-pM-viN">
+            <objects>
+                <tableViewController id="fGK-Xk-qby" customClass="AttendeePickerTableViewController" customModule="Meet" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="45" sectionHeaderHeight="28" sectionFooterHeight="28" id="iCK-p3-TRw">
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AttendeePickerCellIdentifier" rowHeight="45" id="cHJ-Fb-60c" customClass="AttendeePickerCell" customModule="Meet" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="600" height="45"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cHJ-Fb-60c" id="uFa-2u-YZN">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="John Appleseed" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dby-ja-JYP">
+                                            <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="16.5"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="open_bullet_point" translatesAutoresizingMaskIntoConstraints="NO" id="ov9-Nc-trz">
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="15" id="pj2-oi-YXo"/>
+                                                <constraint firstAttribute="width" constant="15" id="zp4-bn-Lks"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="pj2-oi-YXo"/>
+                                                    <exclude reference="zp4-bn-Lks"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="heightClass=regular-widthClass=compact">
+                                                <mask key="constraints">
+                                                    <include reference="pj2-oi-YXo"/>
+                                                    <include reference="zp4-bn-Lks"/>
+                                                </mask>
+                                            </variation>
+                                        </imageView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bullet_point_checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="Cdf-rc-CuV">
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="15" id="UEY-Co-7wS"/>
+                                                <constraint firstAttribute="height" constant="12" id="fM1-UW-xvn"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="UEY-Co-7wS"/>
+                                                    <exclude reference="fM1-UW-xvn"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="heightClass=regular-widthClass=compact">
+                                                <mask key="constraints">
+                                                    <include reference="UEY-Co-7wS"/>
+                                                    <include reference="fM1-UW-xvn"/>
+                                                </mask>
+                                            </variation>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Cdf-rc-CuV" firstAttribute="leading" secondItem="ov9-Nc-trz" secondAttribute="leading" id="9Lh-0U-LBq">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="4"/>
+                                        </constraint>
+                                        <constraint firstItem="Dby-ja-JYP" firstAttribute="centerY" secondItem="uFa-2u-YZN" secondAttribute="centerY" id="9fo-Iz-N8u"/>
+                                        <constraint firstItem="Dby-ja-JYP" firstAttribute="leading" secondItem="uFa-2u-YZN" secondAttribute="leading" constant="20" id="Bf4-TC-BUb"/>
+                                        <constraint firstItem="ov9-Nc-trz" firstAttribute="centerY" secondItem="Dby-ja-JYP" secondAttribute="centerY" id="Dyp-xU-tKa"/>
+                                        <constraint firstItem="Cdf-rc-CuV" firstAttribute="leading" secondItem="Dby-ja-JYP" secondAttribute="trailing" constant="12" id="Gv4-xN-MZv">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="20"/>
+                                        </constraint>
+                                        <constraint firstAttribute="trailing" secondItem="Cdf-rc-CuV" secondAttribute="trailing" constant="16" id="Nxv-IZ-9oc"/>
+                                        <constraint firstItem="Cdf-rc-CuV" firstAttribute="bottom" secondItem="ov9-Nc-trz" secondAttribute="bottom" id="Wle-vU-tVw">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="-3"/>
+                                        </constraint>
+                                        <constraint firstAttribute="bottom" secondItem="Dby-ja-JYP" secondAttribute="bottom" constant="5" id="dIt-6S-Kw3">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="7"/>
+                                        </constraint>
+                                        <constraint firstItem="Dby-ja-JYP" firstAttribute="top" secondItem="uFa-2u-YZN" secondAttribute="top" constant="6" id="om5-Q2-t5i">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="12"/>
+                                        </constraint>
+                                        <constraint firstItem="Cdf-rc-CuV" firstAttribute="centerY" secondItem="ov9-Nc-trz" secondAttribute="centerY" id="qew-W4-0bo"/>
+                                        <constraint firstAttribute="trailing" secondItem="ov9-Nc-trz" secondAttribute="trailing" constant="20" id="zL2-CS-NcF"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="subviews">
+                                            <exclude reference="Dby-ja-JYP"/>
+                                            <exclude reference="ov9-Nc-trz"/>
+                                            <exclude reference="Cdf-rc-CuV"/>
+                                        </mask>
+                                        <mask key="constraints">
+                                            <exclude reference="9fo-Iz-N8u"/>
+                                            <exclude reference="Bf4-TC-BUb"/>
+                                            <exclude reference="dIt-6S-Kw3"/>
+                                            <exclude reference="om5-Q2-t5i"/>
+                                            <exclude reference="9Lh-0U-LBq"/>
+                                            <exclude reference="Gv4-xN-MZv"/>
+                                            <exclude reference="Nxv-IZ-9oc"/>
+                                            <exclude reference="Wle-vU-tVw"/>
+                                            <exclude reference="qew-W4-0bo"/>
+                                            <exclude reference="Dyp-xU-tKa"/>
+                                            <exclude reference="zL2-CS-NcF"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="heightClass=regular-widthClass=compact">
+                                        <mask key="subviews">
+                                            <include reference="Dby-ja-JYP"/>
+                                            <include reference="ov9-Nc-trz"/>
+                                            <include reference="Cdf-rc-CuV"/>
+                                        </mask>
+                                        <mask key="constraints">
+                                            <exclude reference="9fo-Iz-N8u"/>
+                                            <include reference="Bf4-TC-BUb"/>
+                                            <include reference="dIt-6S-Kw3"/>
+                                            <include reference="om5-Q2-t5i"/>
+                                            <include reference="9Lh-0U-LBq"/>
+                                            <include reference="Gv4-xN-MZv"/>
+                                            <exclude reference="Nxv-IZ-9oc"/>
+                                            <include reference="Wle-vU-tVw"/>
+                                            <exclude reference="qew-W4-0bo"/>
+                                            <include reference="Dyp-xU-tKa"/>
+                                            <include reference="zL2-CS-NcF"/>
+                                        </mask>
+                                    </variation>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="checkmarkView" destination="Cdf-rc-CuV" id="M3y-xA-N7a"/>
+                                    <outlet property="nameLabel" destination="Dby-ja-JYP" id="QcZ-oR-Pmy"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="fGK-Xk-qby" id="IGt-8P-bdp"/>
+                            <outlet property="delegate" destination="fGK-Xk-qby" id="GRA-vK-R0i"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="SbT-Rk-8eP">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="ayP-ch-c0F">
+                            <connections>
+                                <segue destination="zLd-Vl-AdB" kind="unwind" identifier="cancelAddAttendees" unwindAction="cancelAddAttendees:" id="kwd-mq-7Zm"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="l2F-51-ACQ">
+                            <connections>
+                                <segue destination="zLd-Vl-AdB" kind="unwind" identifier="attendeesAdded" unwindAction="attendeesAdded:" id="WdI-GH-c65"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="prk-Ym-ACG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="zLd-Vl-AdB" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="6006" y="1541.25"/>
         </scene>
         <!--Talking Point Composer View Controller-->
         <scene sceneID="D8E-HY-17H">
@@ -2995,7 +3155,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XuV-Sd-Rqk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2140" y="410"/>
+            <point key="canvasLocation" x="3057" y="409.5"/>
         </scene>
         <!--dashboard-->
         <scene sceneID="02T-fG-asB">
@@ -3032,7 +3192,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dOh-dA-Eia" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1252" y="405"/>
+            <point key="canvasLocation" x="2169" y="405"/>
         </scene>
         <!--Meet Navigation Controller-->
         <scene sceneID="NXp-V3-jke">
@@ -3495,7 +3655,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y2b-bV-kJ9" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="37t-pf-qdx" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4527" y="867.75"/>
+            <point key="canvasLocation" x="5445" y="867.75"/>
         </scene>
         <!--Talking Point Summary Table View Controller-->
         <scene sceneID="Nxr-LU-Mkw">
@@ -3787,7 +3947,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t4p-b0-jmh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5356.5" y="867.75"/>
+            <point key="canvasLocation" x="6274.5" y="867.75"/>
         </scene>
         <!--Response Table View Controller-->
         <scene sceneID="EPh-dj-vY9">
@@ -4111,12 +4271,23 @@
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bQe-7H-uOA">
                                             <rect key="frame" x="522" y="30" width="48" height="27"/>
                                             <constraints>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="48" id="8PG-j0-j0G"/>
                                                 <constraint firstAttribute="width" constant="48" id="C8A-Zx-yDf">
-                                                    <variation key="heightClass=regular-widthClass=compact" constant="39"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="48"/>
                                                 </constraint>
                                                 <constraint firstAttribute="height" constant="27" id="dXR-dd-c7B"/>
                                             </constraints>
-                                            <state key="normal" image="reply"/>
+                                            <state key="normal" image="paper_airplane"/>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="8PG-j0-j0G"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="heightClass=regular-widthClass=compact">
+                                                <mask key="constraints">
+                                                    <exclude reference="8PG-j0-j0G"/>
+                                                </mask>
+                                            </variation>
                                             <connections>
                                                 <segue destination="Ttd-tC-DE8" kind="unwind" identifier="Unwind From Meeting Response" unwindAction="responseSent:" id="k82-A9-75K"/>
                                             </connections>
@@ -4142,7 +4313,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pyp-VM-6tw" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Ttd-tC-DE8" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3760.5" y="867.75"/>
+            <point key="canvasLocation" x="4678.5" y="867.75"/>
         </scene>
         <!--Meet View Controller-->
         <scene sceneID="UgU-aE-4B6">
@@ -4272,8 +4443,48 @@
             </objects>
             <point key="canvasLocation" x="3043.5" y="1828.5"/>
         </scene>
+        <!--Attendee Picker Navigation Controller-->
+        <scene sceneID="snf-re-vCf">
+            <objects>
+                <navigationController storyboardIdentifier="AttendeePickerNavigationControllerIdentifier" automaticallyAdjustsScrollViewInsets="NO" id="xk1-jT-n64" customClass="AttendeePickerNavigationController" customModule="Meet" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="1sP-MI-SV5">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="fGK-Xk-qby" kind="relationship" relationship="rootViewController" id="hOK-Nl-Fs4"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xEV-qg-tLG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5166" y="1541.25"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="sEP-vh-cLa">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="FLt-UK-1hn" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="e2n-pk-q6I">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="GBT-3n-V0o" kind="relationship" relationship="rootViewController" id="oSu-oa-Hwp"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Wf-oI-H4N" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1242" y="409.5"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="ThisWeek" width="750" height="800"/>
         <image name="about_icon" width="23" height="23"/>
         <image name="bullet_point_checkmark" width="16" height="13"/>
         <image name="button_rectangle" width="295" height="51"/>
@@ -4281,16 +4492,16 @@
         <image name="delete_x" width="17" height="18"/>
         <image name="logo_color" width="79" height="39"/>
         <image name="open_bullet_point" width="17" height="17"/>
+        <image name="paper_airplane" width="53" height="30"/>
         <image name="plus_icon" width="23" height="23"/>
-        <image name="reply" width="39" height="27"/>
         <image name="tab_dashboard" width="24" height="24"/>
         <image name="tab_organizing" width="24" height="24"/>
         <image name="tab_upcoming" width="22" height="22"/>
         <image name="triangle_down" width="15" height="10"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="V4c-3T-o1f"/>
-        <segue reference="EWB-Dv-ID8"/>
         <segue reference="TeA-xT-Dfd"/>
+        <segue reference="EWB-Dv-ID8"/>
+        <segue reference="b7F-Ye-3BF"/>
     </inferredMetricsTieBreakers>
 </document>

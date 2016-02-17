@@ -15,6 +15,20 @@ public class UserDatabase {
     
     static var users = [String: User]()
     
+    // MARK: Local Functions
+    
+    public class func setUser(username: String, user: User) {
+        users[username] = user
+    }
+    
+    public class func updateUser(username: String, user: User) {
+        if let savedUser = users[username] {
+            users[username] = User.union(savedUser, secondaryUser: user)
+        } else {
+            users[username] = user
+        }
+    }
+    
     public class func addUser(user: User) {
         if let username = user.username {
             users[username] = user
@@ -25,56 +39,153 @@ public class UserDatabase {
         return users[username] != nil
     }
     
+    public class func getUsers() -> [String: User] {
+        return self.users
+    }
+    
     public class func getUser(username: String) -> User? {
-        print("getting user: \(username)")
-        if let user = users[username] {
-            if user.username != nil {
-                print("found user in database: \(user)")
-                return user
+        return users[username]
+    }
+    
+    // MARK: Database Functions
+    
+    public class func saveUserToDatabase(username: String, user: User) {
+        if let savedUser = loadUser(username) {
+            let updatedUser = User.union(savedUser, secondaryUser: user)
+            updateUserInDatabase(updatedUser)
+        } else {
+            createUserInDatabase(user)
+        }
+    }
+    
+    public class func load() {
+        let query = PFQuery(className: "InternalUser")
+        do {
+            let results = try query.findObjects()
+            for pfUser in results {
+                let user = getUserFromPFObject(pfUser)
+                if let username = user.username {
+                    users[username] = user
+                }
+            }
+            print("LOADED:")
+            print(users)
+        } catch _ {
+            print("Error occurred when finding users in database.")
+        }
+    }
+    
+    // MARK: Private Implementation
+    
+    private class func createUserInDatabase(user: User) {
+        let pfUser = getPFObjectFromUser(user)
+        pfUser.saveInBackground()
+    }
+    
+    private class func createUserInDatabaseSynch(user: User) {
+        let pfUser = getPFObjectFromUser(user)
+        do {
+            try pfUser.save()
+        } catch _ {
+            print("Error occurred when creating user in database.")
+        }
+    }
+    
+    private class func updateUserInDatabase(user: User) {
+        if let id = user.id {
+            let query = PFQuery(className: "InternalUser")
+            query.getObjectInBackgroundWithId(id) {
+                (pfUser: PFObject?, error: NSError?) -> Void in
+                if error == nil && pfUser != nil {
+                    setPFObjectFromUser(pfUser!, user: user)
+                    pfUser?.saveInBackground()
+                } else {
+                    print(error)
+                }
             }
         }
-
-        AddressBookHelper.getUser(username)
-        
-        if let user = users[username] {
-            if user.username != nil {
-                print("found user after getting from address book: \(user)")
-                return user
+    }
+    
+    private class func updateUserInDatabaseSynch(user: User) {
+        if let id = user.id {
+            let query = PFQuery(className: "InternalUser")
+            do {
+                let pfUser = try query.getObjectWithId(id)
+                setPFObjectFromUser(pfUser, user: user)
+                try pfUser.save()
+            } catch _ {
+                print("Error occurred when updating user in database.")
             }
         }
-
+    }
+    
+    // TODO: background load
+//    private class func loadUserInBackground(username: String) -> User? {
 //        let query = PFQuery(className: "InternalUser")
 //        query.whereKey("username", equalTo: username)
-//        do {
-//            let results = try query.findObjects()
-//            if !results.isEmpty {
-//                let pfUser = results[0]
-//                let user = User()
-//                user.username = username
-//                user.firstName = pfUser["firstName"] as? String
-//                user.lastName = pfUser["lastName"] as? String
-//                users[username] = user
-//                print("found user from parse: \(user)")
-//                return user
+//        query.findObjectsInBackgroundWithBlock {
+//            (results: [PFObject]?, error: NSError?) -> Void in
+//            if error == nil && results != nil {
+//                if !results!.isEmpty {
+//                    let pfUser = results![0]
+//                    return getUserFromPFObject(pfUser)
+//                }
 //            }
-//        } catch _ {
-//            print("Error occurred when finding users in database.")
 //        }
-        
-        print("no user found for \(username)")
+//        return nil
+//    }
+    
+    private class func loadUser(username: String) -> User? {
+        let query = PFQuery(className: "InternalUser")
+        query.whereKey("username", equalTo: username)
+        do {
+            let results = try query.findObjects()
+            if !results.isEmpty {
+                let pfUser = results[0]
+                return getUserFromPFObject(pfUser)
+            }
+        } catch _ {
+            print("Error occurred when finding users in database.")
+        }
         return nil
     }
     
-    public class func create(user: User) {
-        // TODO: remove
-        print("creating new user: \(user)")
-        if let username = user.username {
-            users[username] = user
-            let pfUser = PFObject(className: "InternalUser")
-            pfUser["username"] = username
-            pfUser["firstName"] = user.firstName ?? NSNull()
-            pfUser["lastName"] = user.lastName ?? NSNull()
-            pfUser.saveInBackground()
+    private class func getPFObjectFromUser(user: User) -> PFObject {
+        let pfUser = PFObject(className: "InternalUser")
+        setPFObjectFromUser(pfUser, user: user)
+        return pfUser
+    }
+    
+    private class func setPFObjectFromUser(pfUser: PFObject, user: User) {
+        pfUser["username"] = user.username ?? NSNull()
+        pfUser["firstName"] = user.firstName ?? NSNull()
+        pfUser["lastName"] = user.lastName ?? NSNull()
+        pfUser["emails"] = user.emails
+        pfUser["phoneNumbers"] = user.phoneNumbers
+        // TODO: add profile picture
+        pfUser["isRegistered"] = user.isRegistered
+    }
+    
+    private class func getUserFromPFObject(pfUser: PFObject) -> User {
+        let user = User()
+        user.id = pfUser.objectId
+        user.username = pfUser["username"] as? String
+        user.firstName = pfUser["firstName"] as? String
+        user.lastName = pfUser["lastName"] as? String
+        
+        if let emails = pfUser["emails"] as? [String] {
+            user.emails = emails
         }
+        
+        if let phoneNumbers = pfUser["phoneNumbers"] as? [String] {
+            user.phoneNumbers = phoneNumbers
+        }
+
+        // TODO: add profile picture
+        if let isRegistered = pfUser["isRegistered"] as? Bool {
+            user.isRegistered = isRegistered
+        }
+        
+        return user
     }
 }
