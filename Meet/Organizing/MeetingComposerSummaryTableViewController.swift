@@ -83,12 +83,19 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
         // Empty.
     }
     
-    @IBAction func newTalkingPointComposed(segue: UIStoryboardSegue) {
+    func talkingPointComposed(talkingPoint: TalkingPoint) {
+        self.selectedIndex = nil
+        self.meeting.talkingPoints.append(talkingPoint)
         updateUI()
     }
     
-    @IBAction func cancelComposeTalkingPoint(segue: UIStoryboardSegue) {
-        // Empty.
+    func talkingPointUpdated() {
+        self.selectedIndex = nil
+        updateUI()
+    }
+    
+    func talkingPointCancelled() {
+        self.selectedIndex = nil
     }
     
     @IBAction func datePicked(segue: UIStoryboardSegue) {
@@ -107,7 +114,7 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
         static let SegueAddTalkingPoint = "SegueAddTalkingPoint"
         static let MeetingComposerSummaryInformationCellIdentifier = "MeetingComposerSummaryInformationCellIdentifier"
         static let MeetingComposerSummaryAttendeesCellIdentifier = "MeetingComposerSummaryAttendeesCell"
-        static let MeetingComposerSummaryNewTalkingPointCellIdentifier = "NewTalkingPointCell"
+        static let EditableTalkingPointCellIdentifier = "EditableTalkingPointCell"
         static let MeetingComposerSummaryTalkingPointCellIdentifier = "TalkingPointCell"
         static let AttendeePickerNavigationControllerIdentifier = "AttendeePickerNavigationControllerIdentifier"
     }
@@ -166,29 +173,37 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 3 {
+        if section == 2 {
             return meeting.talkingPoints.count
         }
         return 1
     }
     
-    var selectedIndex: NSIndexPath? = nil
+    var selectedIndex: NSIndexPath? = nil {
+        didSet {
+            tableView.beginUpdates()
+            tableView.endUpdates()
+        }
+    }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if selectedIndex != nil && selectedIndex == indexPath {
-            return 200
+            return 160
         }
         return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if let selectedIndex = self.selectedIndex {
+            if let prevCell = tableView.cellForRowAtIndexPath(selectedIndex) as? EditableTalkingPointCell {
+                prevCell.doneEditing()
+            }
+        }
         switch indexPath.section {
-        case 2:
+        case 2, 3:
             if let cell = tableView.cellForRowAtIndexPath(indexPath) as? EditableTalkingPointCell {
                 self.selectedIndex = indexPath
                 cell.isEditingTalkingPoint = true
-                tableView.beginUpdates()
-                tableView.endUpdates()
             }
         default: break
         }
@@ -210,13 +225,16 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
             cell.delegate = self
             return cell
         case 2:
-            let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.MeetingComposerSummaryNewTalkingPointCellIdentifier, forIndexPath: indexPath)
-            cell.selectionStyle = UITableViewCellSelectionStyle.None
-            return cell
-        case 3:
-            let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.MeetingComposerSummaryTalkingPointCellIdentifier, forIndexPath: indexPath) as! TalkingPointsTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.EditableTalkingPointCellIdentifier, forIndexPath: indexPath) as! EditableTalkingPointCell
             cell.talkingPoint = meeting.talkingPoints[indexPath.row]
             cell.selectionStyle = UITableViewCellSelectionStyle.None
+            cell.delegate = self
+            return cell
+        case 3:
+            let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.EditableTalkingPointCellIdentifier, forIndexPath: indexPath) as! EditableTalkingPointCell
+            cell.talkingPoint = nil
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            cell.delegate = self
             return cell
         default:
             return UITableViewCell()

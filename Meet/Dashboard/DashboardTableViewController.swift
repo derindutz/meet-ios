@@ -115,7 +115,7 @@ class DashboardTableViewController: MeetTableViewController {
     private struct Constants {
         static let DashboardStatisticsCellIdentifier = "DashboardStatisticsCell"
         static let NextMeetingTitleCellIdentifier = "NextMeetingTitleCell"
-        static let NextMeetingTitleCellTitle = "next meeting"
+        static let NextMeetingTitleCellTitle = "Next Meeting"
         static let NextMeetingCellIdentifier = "NextMeetingCell"
         static let MeetingSectionNullStateCellIdentifier = "MeetingSectionNullStateCell"
         static let SegueShowMeetingSummary = "Segue Show Meeting Summary From Dashboard"

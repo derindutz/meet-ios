@@ -311,13 +311,15 @@ class OrganizingTableViewController: MeetTableViewController {
     
     private var mode: Mode = .Upcoming
     
+    // TODO: fix bug where can delete entire unsent section
+    
     // MARK: Constants
     
     private struct Constants {
-        static let AwaitingResponseSection = "awaiting response"
-        static let UpcomingSection = "upcoming"
-        static let UnsentSection = "unsent"
-        static let HostingSection = "hosting"
+        static let AwaitingResponseSection = "Awaiting Response"
+        static let UpcomingSection = "Upcoming"
+        static let UnsentSection = "Unsent"
+        static let HostingSection = "Hosting"
         static let SegueShowMeetingSummary = "Segue Show Meeting Summary"
         static let SegueMeetingResponse = "Segue Meeting Response"
         static let SegueCreateMeeting = "Segue Create Meeting"
