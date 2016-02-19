@@ -124,7 +124,7 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
             }
             return self.meeting.send()
         } else if identifier == Storyboard.SegueAddTalkingPoint {
-            return true
+            return false
         } else if identifier == Storyboard.SegueSetTime {
             return true
         }
@@ -172,6 +172,28 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
         return 1
     }
     
+    var selectedIndex: NSIndexPath? = nil
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if selectedIndex != nil && selectedIndex == indexPath {
+            return 200
+        }
+        return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        switch indexPath.section {
+        case 2:
+            if let cell = tableView.cellForRowAtIndexPath(indexPath) as? EditableTalkingPointCell {
+                self.selectedIndex = indexPath
+                cell.isEditingTalkingPoint = true
+                tableView.beginUpdates()
+                tableView.endUpdates()
+            }
+        default: break
+        }
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
@@ -189,6 +211,7 @@ class MeetingComposerSummaryTableViewController: MeetingComposerTableViewControl
             return cell
         case 2:
             let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.MeetingComposerSummaryNewTalkingPointCellIdentifier, forIndexPath: indexPath)
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             return cell
         case 3:
             let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.MeetingComposerSummaryTalkingPointCellIdentifier, forIndexPath: indexPath) as! TalkingPointsTableViewCell

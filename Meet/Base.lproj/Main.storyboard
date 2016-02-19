@@ -2641,7 +2641,7 @@
                                     </variation>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewTalkingPointCell" rowHeight="50" id="JbR-BK-ggA">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewTalkingPointCell" rowHeight="50" id="JbR-BK-ggA" customClass="EditableTalkingPointCell" customModule="Meet" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="429" width="600" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JbR-BK-ggA" id="doL-du-TlG">
@@ -2654,6 +2654,13 @@
                                             <color key="textColor" red="0.82352941180000006" green="0.84313725490000002" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Example: Coordinate flight logistics for everyone on the Seattle trip next Tuesday." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Pa3-WA-MtP">
+                                            <rect key="frame" x="29" y="77" width="542" height="174"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="textColor" red="0.82352941180000006" green="0.84313725490000002" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
+                                            <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                        </textView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus_icon" translatesAutoresizingMaskIntoConstraints="NO" id="TPO-rE-Ev4">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                             <constraints>
@@ -2677,11 +2684,22 @@
                                         </imageView>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="Pa3-WA-MtP" firstAttribute="top" secondItem="doL-du-TlG" secondAttribute="topMargin" constant="12" id="D9H-lv-vgA">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="2"/>
+                                        </constraint>
                                         <constraint firstItem="TPO-rE-Ev4" firstAttribute="top" secondItem="doL-du-TlG" secondAttribute="topMargin" constant="3" id="NWx-kt-RSG">
                                             <variation key="heightClass=regular-widthClass=compact" constant="7"/>
                                         </constraint>
-                                        <constraint firstItem="uEV-pU-U7d" firstAttribute="leading" secondItem="doL-du-TlG" secondAttribute="leadingMargin" constant="11" id="QsY-l8-GjU"/>
+                                        <constraint firstItem="uEV-pU-U7d" firstAttribute="leading" secondItem="doL-du-TlG" secondAttribute="leadingMargin" constant="11" id="QsY-l8-GjU">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="12"/>
+                                        </constraint>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Pa3-WA-MtP" secondAttribute="trailing" constant="21" id="T87-Hc-V3o">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="12"/>
+                                        </constraint>
                                         <constraint firstItem="uEV-pU-U7d" firstAttribute="centerY" secondItem="TPO-rE-Ev4" secondAttribute="centerY" id="awS-bb-k1l"/>
+                                        <constraint firstItem="Pa3-WA-MtP" firstAttribute="leading" secondItem="doL-du-TlG" secondAttribute="leadingMargin" constant="21" id="c7T-Ql-zkF">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="12"/>
+                                        </constraint>
                                         <constraint firstAttribute="trailingMargin" secondItem="TPO-rE-Ev4" secondAttribute="trailing" constant="25" id="dJc-GB-E6P">
                                             <variation key="heightClass=regular-widthClass=compact" constant="22"/>
                                         </constraint>
@@ -2690,33 +2708,49 @@
                                             <variation key="heightClass=regular-widthClass=compact" constant="6"/>
                                         </constraint>
                                         <constraint firstItem="uEV-pU-U7d" firstAttribute="top" secondItem="doL-du-TlG" secondAttribute="topMargin" constant="2" id="sgz-ds-UAq"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="Pa3-WA-MtP" secondAttribute="bottom" constant="-352" id="tQQ-0o-uWf">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="2"/>
+                                        </constraint>
                                     </constraints>
                                     <variation key="default">
                                         <mask key="subviews">
+                                            <exclude reference="Pa3-WA-MtP"/>
                                             <exclude reference="TPO-rE-Ev4"/>
                                         </mask>
                                         <mask key="constraints">
+                                            <exclude reference="awS-bb-k1l"/>
+                                            <exclude reference="D9H-lv-vgA"/>
+                                            <exclude reference="T87-Hc-V3o"/>
+                                            <exclude reference="c7T-Ql-zkF"/>
+                                            <exclude reference="tQQ-0o-uWf"/>
                                             <exclude reference="NWx-kt-RSG"/>
                                             <exclude reference="dJc-GB-E6P"/>
                                             <exclude reference="qHe-QW-ua5"/>
                                             <exclude reference="sXx-c6-0sN"/>
-                                            <exclude reference="awS-bb-k1l"/>
                                         </mask>
                                     </variation>
                                     <variation key="heightClass=regular-widthClass=compact">
                                         <mask key="subviews">
+                                            <include reference="Pa3-WA-MtP"/>
                                             <include reference="TPO-rE-Ev4"/>
                                         </mask>
                                         <mask key="constraints">
+                                            <include reference="awS-bb-k1l"/>
+                                            <include reference="D9H-lv-vgA"/>
+                                            <include reference="T87-Hc-V3o"/>
+                                            <include reference="c7T-Ql-zkF"/>
+                                            <include reference="tQQ-0o-uWf"/>
                                             <include reference="NWx-kt-RSG"/>
                                             <include reference="dJc-GB-E6P"/>
                                             <include reference="qHe-QW-ua5"/>
                                             <include reference="sXx-c6-0sN"/>
-                                            <include reference="awS-bb-k1l"/>
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="addTalkingPointIcon" destination="TPO-rE-Ev4" id="dSK-UZ-sHO"/>
+                                    <outlet property="addTalkingPointLabel" destination="uEV-pU-U7d" id="Bp4-4M-zA4"/>
+                                    <outlet property="talkingPointTextView" destination="Pa3-WA-MtP" id="LaZ-N7-ZqX"/>
                                     <segue destination="9dk-o1-vwp" kind="showDetail" identifier="SegueAddTalkingPoint" action="showViewController:sender:" id="iWj-C1-Tfr"/>
                                 </connections>
                             </tableViewCell>

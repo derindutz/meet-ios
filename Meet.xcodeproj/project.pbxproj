@@ -73,6 +73,7 @@
 		91D25E841BF6C543004BFBF1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91D25E831BF6C543004BFBF1 /* SystemConfiguration.framework */; };
 		91D25E861BF6C54A004BFBF1 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 91D25E851BF6C54A004BFBF1 /* libz.tbd */; };
 		91D25E881BF6C554004BFBF1 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 91D25E871BF6C554004BFBF1 /* libsqlite3.tbd */; };
+		91DA4E641C76A33B003F5674 /* EditableTalkingPointCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DA4E631C76A33B003F5674 /* EditableTalkingPointCell.swift */; };
 		91DD30CC1BF6C92A00EF5C06 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DD30CB1BF6C92A00EF5C06 /* Account.swift */; };
 		91EE1CF31BF6D6F300E61AFB /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91EE1CF21BF6D6F300E61AFB /* LoginViewController.swift */; };
 		91F73A0E1C02C505008A7267 /* MeetingSummaryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F73A0D1C02C505008A7267 /* MeetingSummaryTableViewController.swift */; };
@@ -173,6 +174,7 @@
 		91D25E831BF6C543004BFBF1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		91D25E851BF6C54A004BFBF1 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		91D25E871BF6C554004BFBF1 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		91DA4E631C76A33B003F5674 /* EditableTalkingPointCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditableTalkingPointCell.swift; path = "Meeting Composer/EditableTalkingPointCell.swift"; sourceTree = "<group>"; };
 		91DD30CB1BF6C92A00EF5C06 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Account.swift; path = Login/Account.swift; sourceTree = "<group>"; };
 		91EE1CF21BF6D6F300E61AFB /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Login/LoginViewController.swift; sourceTree = "<group>"; };
 		91F73A0D1C02C505008A7267 /* MeetingSummaryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingSummaryTableViewController.swift; sourceTree = "<group>"; };
@@ -305,6 +307,7 @@
 				91C5C9361C6EBFE000AB5849 /* AttendeePickerTableViewController.swift */,
 				91C5C9381C6ECA7800AB5849 /* AttendeePickerCell.swift */,
 				911870E91C71BB8800377331 /* AttendeePickerNavigationController.swift */,
+				91DA4E631C76A33B003F5674 /* EditableTalkingPointCell.swift */,
 			);
 			name = "Meeting Composer";
 			sourceTree = "<group>";
@@ -690,6 +693,7 @@
 				91FAED961C0F88CA00B00619 /* ProfileView.swift in Sources */,
 				911870EA1C71BB8800377331 /* AttendeePickerNavigationController.swift in Sources */,
 				91107FDB1C62FAC20022D66D /* AddUserButton.swift in Sources */,
+				91DA4E641C76A33B003F5674 /* EditableTalkingPointCell.swift in Sources */,
 				91C5C9391C6ECA7800AB5849 /* AttendeePickerCell.swift in Sources */,
 				9187EE9A1C0927BA00E43B30 /* UserProfileNameView.swift in Sources */,
 				916B7FDE1BFBEA950031DFCE /* MeetNavigationController.swift in Sources */,
